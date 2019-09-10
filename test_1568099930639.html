@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>test</title>
+    <style type="text/css">
+    button {
+  background-color: #000;
+  color: #fff;
+  border: 0;
+  font-size: 1em;
+}
+    </style>
+  </head>
+  <body>
+    <div class="container">
+    <br/>
+    <div class="jumbotron">
+        <p class="lead" id="greeting"></p>
+        <hr/>
+        <form id="form">
+            <div class="form-group">
+                <label for="name">Name</label>
+                <input type="text" class="form-control" id="name" placeholder="">
+            </div>
+            <div class="form-group">
+                <label for="comment">Comment</label>
+                <input type="text" class="form-control" id="comment" placeholder="">
+            </div>
+            <button type="button" id="submit" class="btn btn-primary">Send Comment</button>
+        </form>
+        <p id="me" style="display:none">Thank you, <span id="myname" class="badge badge-info"></span></p>
+    </div>
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th scope="col">Name</th>
+                <th scope="col">Comment</th>
+            </tr>
+        </thead>
+        <tbody id="likes">
+        </tbody>
+    </table>
+</div>
+
+    <script type="text/javascript">
+    window.BuidlProviders = {
+      web3: {
+        url: "https://devchain.secondstate.io:8545",
+        chainId: "27183",
+        gasPrice: "0",
+        gasLimit: "8192000000",
+      },
+      es: {
+        url: "https://devchain.ss.search.secondstate.io"
+      }
+    }
+    </script>
+    <script type="text/javascript" src="https://buidl.secondstate.io/embed/index.js"></script>
+
+    <script type="text/javascript">
+    $(function() {
+  reload();
+});
+
+function reload() {
+    $("#greeting").html(instance.greeting());
+    web3.ss.getAccounts(function (e, address) {
+        if (!e) {
+            var result = instance.getNameComment(address);
+            if (result[0]) {
+                $("#form").css("display", "none");
+                $("#me").css("display", "block");
+                $("#myname").html(result[0]);
+            }
+            
+            var likes = "";
+            var addrs = instance.getAddrs();
+            addrs.forEach(function(addr) {
+                result = instance.getNameComment(addr);
+                likes = likes + "<tr><td>" + result[0] + "</td><td>" + result[1] + "</td></tr>";
+            });
+            $("#likes").html(likes);
+        }
+    });
+}
+
+$("#submit").click(function() {
+    if ((!$("#name").val().trim()) || (!$("#comment").val().trim())) {
+      alert("Please enter both a name and a comment");
+      return false;
+    }
+    web3.ss.getAccounts(function (e, address) {
+        if (!e) {
+            $("#submit").html("Wait ...");
+            instance.addComment (address, $("#name").val(), $("#comment").val());
+            setTimeout(function () {
+                reload ();
+            }, 3 * 1000);
+        }
+    });
+    return false;
+});
+    </script>
+  </body>
+</html>
