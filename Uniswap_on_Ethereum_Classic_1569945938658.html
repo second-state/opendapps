@@ -109,7 +109,7 @@ function vote (choice) {
             $("#formSubmitted").css("display", "block");
             instance.vote(choice, {
                 gas: 400000,
-                gasPrice: 15000000000
+                gasPrice: 5000000000
             }, function (ee, result) {
                 if (ee) {
                     window.alert("Failed. Check if there is at least 0.1 ETC (for gas fee) in your account " + address);
