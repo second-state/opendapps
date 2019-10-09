@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>小c</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" />
+    <style type="text/css">
+    
+    </style>
+  </head>
+  <body>
+    
+<div class="container">
+    <br/>
+    <div class="jumbotron">
+        <p class="lead" id="greeting"></p>
+        <hr/>
+        <form id="form" class="form-inline">
+            <div class="form-group mx-sm-3 mb-2">
+                <input type="text" class="form-control" id="name" placeholder="Your Name">
+            </div>
+            <div class="alert alert-primary" role="alert" id="recording" style="display:none">
+                Recording on the CyberMiles public blockchain. It could take up to 20 seconds for CyberMiles global validator nodes to reach consensus.
+            </div>
+            <button type="button" id="submit" onclick="like();" class="btn btn-primary mb-2">Like👍</button>
+        </form>
+        <p id="me" style="display:none">Thank you, <span id="myname" class="badge badge-info"></span></p>
+    </div>
+    <p id="likes"></p>
+</div>
+
+<div style="text-align:center">
+    <br/><br/>
+    Created by the <a href="https://buidl.secondstate.io/">BUIDL IDE</a>
+    <br/>
+    All "likes" are permanently recorded on the <a href="https://app.cybermiles.io">CyberMiles public blockchain</a>.
+    <br/>
+    [<a href="https://docs.secondstate.io/buidl-developer-tool/why-buidl">Learn more</a> | <a href="https://github.com/second-state/buidl/tree/master/demo/celebration">Source code</a>]
+</div>
+
+    <script type="text/javascript">
+    window.BuidlProviders = {
+      web3: {
+        url: "https://rpc.cybermiles.io:8545",
+        chainId: "18",
+        gasPrice: "5000000000",
+        gasLimit: "8000000",
+      },
+      es: {
+        url: "https://cmt.search.secondstate.io"
+      }
+    }
+    </script>
+    <script type="text/javascript" src="https://buidl.secondstate.io/embed/main.js"></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script type="text/javascript">
+    
+/* Don't modify */
+这里的代码不要改，从reload() 开始复制
+/* Don't modify */
+
+reload();
+
+function reload() {
+    document.querySelector("#greeting").innerHTML = instance.greeting();
+    web3.ss.getAccounts(function (e, address) {
+        if (!e) {
+            var myName = instance.getLikeName(address);
+            if (myName) {
+                document.querySelector("#form").style.display = "none";
+                document.querySelector("#me").style.display = "block";
+                document.querySelector("#myname").innerHTML = myName;
+            }
+            
+            var likes = "Liked by ";
+            var addrs = instance.getAddrs();
+            addrs.forEach(function(addr) {
+                instance.getLikeName(addr, function (ee, r) {
+                    if (!ee) {
+                        likes = likes + "<span class=\"badge badge-success\">" + r + "</span> ";
+                        document.querySelector("#likes").innerHTML = likes;
+                    }
+                });
+            });
+        }
+    });
+}
+
+function like () {
+    document.querySelector("#submit").disabled = true;
+    web3.ss.getAccounts(function (e, address) {
+        if (!e) {
+            document.querySelector("#recording").style.display = "block";
+            document.querySelector("#submit").innerHTML = "Please Wait ...";
+            instance.addLike(address, document.querySelector("#name").value, {
+                gas: 400000,
+                gasPrice: 0
+            }, function (e, result) {
+                console.log(e + " : " + result);
+                // ... ...
+            });
+            setTimeout(function () {
+                reload ();
+            }, 20 * 1000);
+        }
+    });
+    return false;
+    </script>
+  </body>
+</html>
