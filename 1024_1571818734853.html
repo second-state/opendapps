@@ -34,7 +34,7 @@
             </div>
             <button type="button" id="submit" class="btn btn-primary">Send Comment</button>
         </form>
-        <div id="formSubmitted" style="display:none">Please wait up to 20 seconds for confirmation ...</div>
+        <div id="formSubmitted" style="display:none">Please wait up to 25 seconds for confirmation ...</div>
         <p id="me" style="display:none"><span id="myname" class="badge badge-info"></span>，谢谢参与，快邀请朋友一起参与吧！</p>
     </div>
     
@@ -136,7 +136,7 @@ $("#submit").click(function() {
             });
             setTimeout(function () {
                 reload ();
-            }, 20 * 1000);
+            }, 24 * 1000);
         }
     });
     return false;
