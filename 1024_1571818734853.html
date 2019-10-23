@@ -118,23 +118,29 @@ function reload() {
 }
 
 $("#submit").click(function() {
+    console.log("1");
     if ((!$("#name").val().trim()) || (!$("#comment").val().trim())) {
       alert("Please enter both a name and a comment");
       return false;
     }
     web3.ss.getAccounts(function (e, address) {
+        console.log("2");
         if (!e) {
+            console.log("3");
             $("#form").css("display", "none");
             $("#formSubmitted").css("display", "block");
+            console.log("4");
             instance.addComment ($("#name").val(), $("#email").val(), $("#comment").val(), {
                 gas: 499000,
                 gasPrice: 0
             }, function (ee, r) {
+                console.log("5");
                 if (ee) {
                     window.alert("Failed at " + address);
                 }
             });
             setTimeout(function () {
+                console.log("6");
                 reload ();
             }, 24 * 1000);
         }
