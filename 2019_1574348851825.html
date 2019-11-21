@@ -358,7 +358,8 @@ function reload() {
             instance.getCheckin(address, function (ee, result) {
                 if (result[0]) {
                     $("#greeting").html(success);
-                    $("#greeting").removeClass("lead");
+                    // $("#greeting").removeClass("lead");
+                    $("#greeting").css("font-size", "14px");
                     $("#form").css("display", "none");
                     $("#me").css("display", "block");
                     $("#myname").html(result[0]);
