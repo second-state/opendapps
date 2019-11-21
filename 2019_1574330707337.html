@@ -157,7 +157,7 @@ function checkin (element) {
     }
     web3.ss.getAccounts(function (e, address) {
         if (!e) {
-            // if (confirm("确认签到 " + n + " [" + o + "]")) {
+            if (confirm("确认签到 " + n + " [" + o + "]")) {
                 $("#formSubmitted").css("display", "block");
                 instance.addCheckin (n, o, {
                     gas: 499000,
@@ -170,7 +170,7 @@ function checkin (element) {
                 setTimeout(function () {
                     reload ();
                 }, 20 * 1000);
-            // }
+            }
         }
     });
     return false;
