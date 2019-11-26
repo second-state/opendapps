@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>CMT Future Vote</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" />
+    <style type="text/css">
+    button {
+  background-color: #000;
+  color: #fff;
+  border: 0;
+  font-size: 1em;
+}
+    </style>
+  </head>
+  <body>
+    <div class="container">
+    <br/>
+    <div class="jumbotron">
+        <p class="lead" id="greeting"></p>
+        <hr/>
+        <form id="form">
+            <div class="form-group">
+                <label for="name">Name</label>
+                <input type="text" class="form-control" id="name" placeholder="">
+            </div>
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" class="form-control" id="email" placeholder="">
+            </div>
+            <div class="form-group">
+                <label for="comment">Comment</label>
+                <input type="text" class="form-control" id="comment" placeholder="">
+            </div>
+            <button type="button" id="submit" class="btn btn-primary">Send Comment</button>
+        </form>
+        <div id="formSubmitted" style="display:none">Please wait up to 5 seconds for confirmation ...</div>
+        <p id="me" style="display:none">Thank you, <span id="myname" class="badge badge-info"></span></p>
+    </div>
+    
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th scope="col">Name</th>
+                <th scope="col">Comment</th>
+            </tr>
+        </thead>
+        <tbody id="likes">
+        </tbody>
+    </table>
+    <p style="text-align:center">Created with <a target="_blank" href="https://docs.secondstate.io/buidl-developer-tool/why-buidl">the BUIDL IDE</a>.</p>
+</div>
+
+    <script type="text/javascript">
+    window.BuidlProviders = {
+      web3: {
+        url: "https://devchain.secondstate.io:8545",
+        chainId: "27183",
+        gasPrice: "0",
+        gasLimit: "8192000000",
+      },
+      es: {
+        url: "https://devchain.ss.search.secondstate.io"
+      }
+    }
+    </script>
+    <script type="text/javascript" src="https://buidl.secondstate.io/embed/main.js"></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script type="text/javascript">
+    /* Don't modify */
+var instance = null;
+window.addEventListener('web3Ready', function() {
+  var contract = web3.ss.contract(abi);
+  instance = contract.at(cAddr);
+  reload();
+});
+
+function reload() {
+    instance.greeting(function (e, r) {
+        $("#greeting").html(r);
+    });
+    
+    $("#form").css("display", "block");
+    $("#formSubmitted").css("display", "none");
+    $("#me").css("display", "none");
+    web3.ss.getAccounts(function (e, address) {
+        if (!e) {
+            instance.getComment(address, function (ee, result) {
+                if (result[0]) {
+                    $("#form").css("display", "none");
+                    $("#me").css("display", "block");
+                    $("#myname").html(result[0]);
+                }
+            });
+            
+            var likes = "";
+            instance.getAddrs(function (ee, addrs) {
+                addrs.forEach(function(addr) {
+                    instance.getComment(addr, function (ee, r) {
+                        if (!ee) {
+                            likes = likes + "<tr><td>" + r[0] + "</td><td>" + r[2] + "</td></tr>";
+                            $("#likes").html(likes);
+                        }
+                    });
+                });
+            });
+            $("#likes").html(likes);
+        }
+    });
+}
+
+$("#submit").click(function() {
+    if ((!$("#name").val().trim()) || (!$("#comment").val().trim())) {
+      alert("Please enter both a name and a comment");
+      return false;
+    }
+    web3.ss.getAccounts(function (e, address) {
+        if (!e) {
+            $("#form").css("display", "none");
+            $("#formSubmitted").css("display", "block");
+            instance.addComment ($("#name").val(), $("#email").val(), $("#comment").val(), {
+                gas: 499000,
+                gasPrice: 0
+            }, function (ee, r) {
+                if (ee) {
+                    window.alert("Failed at " + address);
+                }
+            });
+            setTimeout(function () {
+                reload ();
+            }, 5 * 1000);
+        }
+    });
+    return false;
+});
+    </script>
+  </body>
+</html>
