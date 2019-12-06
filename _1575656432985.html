@@ -93,7 +93,7 @@ function reload() {
                     $("#form").css("display", "none");
                     $("#me").css("display", "block");
                     $("#myname").html(result[0]);
-                    $("#addr").text(shorten(address));
+                    $("#addr").html(shorten(address));
                 }
             });
             
@@ -106,7 +106,7 @@ function reload() {
                             if (content.indexOf(r[0])!==-1 && content.indexOf(r[1])!==-1) {
                                 // skip
                             } else {
-                                checkins = "<tr><td><a href='javascript:void(0);' onclick='openTracking(addr)'>" + shorten(addr) + "</a></td><td>" + r[0] + "</td><td>" + r[1] + "</td></tr>" + checkins;
+                                checkins = "<tr><td><a href='https://www.cmttracking.io/address/" + addr + "'>" + shorten(addr) + "</a></td><td>" + r[0] + "</td><td>" + r[1] + "</td></tr>" + checkins;
                                 $("#checkins").html(checkins);
                             }
                         }
