@@ -93,7 +93,7 @@ function reload() {
                     $("#form").css("display", "none");
                     $("#me").css("display", "block");
                     $("#myname").html(result[0]);
-                    $("#addr").html(shorten(address));
+                    $("#addr").html(shorten(address.toString()));
                 }
             });
             
