@@ -25,7 +25,7 @@
             <button type="button" id="submit" class="btn btn-primary">发送</button>
         </form>
         <div id="formSubmitted" style="display:none">共识上链中，请等 20 秒 ...</div>
-        <p id="me" style="display:none"><span id="myname" class="badge badge-info"></span> 已经签到，谢谢！链上地址 <span style='max-width:100px;overflow:hidden;text-overflow:ellipsis;'><a id='addr' href='javascript:void(0);' onclick='openTracking(this)'></a></span></p>
+        <p id="me" style="display:none"><span id="myname" class="badge badge-info"></span> 已经签到，谢谢！链上地址 <span id='addr'></span></p>
     </div>
     
     <h4>已经签到</h4>
@@ -93,7 +93,7 @@ function reload() {
                     $("#form").css("display", "none");
                     $("#me").css("display", "block");
                     $("#myname").html(result[0]);
-                    $("#addr").text(address);
+                    $("#addr").text(shorten(address));
                 }
             });
             
@@ -106,7 +106,7 @@ function reload() {
                             if (content.indexOf(r[0])!==-1 && content.indexOf(r[1])!==-1) {
                                 // skip
                             } else {
-                                checkins = "<tr><td style='max-width:100px;overflow:hidden;text-overflow:ellipsis;'><a href='javascript:void(0);' onclick='openTracking(this)'>" + addr + "</a></td><td>" + r[0] + "</td><td>" + r[1] + "</td></tr>" + checkins;
+                                checkins = "<tr><td><a href='javascript:void(0);' onclick='openTracking(addr)'>" + shorten(addr) + "</a></td><td>" + r[0] + "</td><td>" + r[1] + "</td></tr>" + checkins;
                                 $("#checkins").html(checkins);
                             }
                         }
@@ -151,8 +151,12 @@ $("#submit").click(function() {
     return false;
 });
 
-function openTracking (e) {
-    location.href = 'https://www.cmttracking.io/address/' + jQuery(e).text();
+function openTracking (addr) {
+    location.href = 'https://www.cmttracking.io/address/' + addr;
+}
+      
+function shorten (addr) {
+    return addr.replace(/(.{7})..+/, "$1…");
 }
     </script>
   </body>
