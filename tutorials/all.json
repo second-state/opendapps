@@ -1,6 +1,16 @@
 [
   "simple": {
     "title": "Simple Storage",
-    "intro": "A simple contract to demostrate how data is set and get."
+    "intro": "A simple contract to demostrate how data is set and get.",
+    "resources": {
+      "css": ["https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"],
+      "js": ["https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"]
+    },
+    "files": {
+      "sol": "s.sol",
+      "html": "s.html",
+      "css": "s.css",
+      "js": "s.js"
+    }
   }
 ]
