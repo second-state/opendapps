@@ -7,7 +7,7 @@
       "js": ["https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"]
     },
     "files": {
-      "sol": "s.sol",
+      "lity": "s.lity",
       "html": "s.html",
       "css": "s.css",
       "js": "s.js"
