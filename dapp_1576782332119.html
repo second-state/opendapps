@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>dapp</title>
+    
+    <style type="text/css">
+    button {
+  background-color: #000;
+  color: #fff;
+  border: 0;
+  font-size: 1em;
+}
+    </style>
+  </head>
+  <body>
+    <button id="s">Set Data</button>
+<button id="g">Get Data</button>
+
+    <script type="text/javascript">
+    window.BuidlProviders = {
+      web3: {
+        url: "https://devchain.secondstate.io:8545",
+        chainId: "27183",
+        gasPrice: "0",
+        gasLimit: "8192000000",
+      },
+      es: {
+        url: "https://devchain.ss.search.secondstate.io"
+      }
+    }
+    </script>
+    <script type="text/javascript" src="https://buidl.secondstate.io/embed/main.js"></script>
+    
+    <script type="text/javascript">
+    /* Don't modify */
+var abi = [{"constant":true,"inputs":[{"name":"","type":"uint256"}],"name":"acquirenti","outputs":[{"name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"getAcquirenti","outputs":[{"name":"","type":"address[6]"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"carId","type":"uint256"}],"name":"compra","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"nonpayable","type":"function"}];
+var bytecode = '608060405234801561001057600080fd5b50610342806100206000396000f300608060405260043610610057576000357c0100000000000000000000000000000000000000000000000000000000900463ffffffff1680634ae633841461005c57806361a13b63146100c95780637cb029501461011c575b600080fd5b34801561006857600080fd5b506100876004803603810190808035906020019092919050505061015d565b604051808273ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200191505060405180910390f35b3480156100d557600080fd5b506100de610192565b6040518082600660200280838360005b838110156101095780820151818401526020810190506100ee565b5050505090500191505060405180910390f35b34801561012857600080fd5b5061014760048036038101908080359060200190929190505050610213565b6040518082815260200191505060405180910390f35b60008160068110151561016c57fe5b016000915054906101000a900473ffffffffffffffffffffffffffffffffffffffff1681565b61019a6102f3565b6000600680602002604051908101604052809291908260068015610209576020028201915b8160009054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200190600101908083116101bf575b5050505050905090565b6000808210158015610226575060058211155b151561023157600080fd5b600073ffffffffffffffffffffffffffffffffffffffff1660008360068110151561025857fe5b0160009054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff1614151561029c57600080fd5b336000836006811015156102ac57fe5b0160006101000a81548173ffffffffffffffffffffffffffffffffffffffff021916908373ffffffffffffffffffffffffffffffffffffffff160217905550819050919050565b60c0604051908101604052806006906020820280388339808201915050905050905600a165627a7a7230582065a2c4615c8ddfeb3728432375d07ff43aeed9191bf5568eb636e3e38eb1884d0029';
+var cAddr = '0x87e9cca57e79a6a5b7e06a781b59d000c2d9b87e';
+/* Don't modify */
+
+var instance = null;
+window.addEventListener('web3Ready', function() {
+  var contract = web3.ss.contract(abi);
+  instance = contract.at(cAddr);
+});
+
+// esss.shaAbi(JSON.stringify(abi)).then((shaResult) => {
+//   var sha = JSON.parse(shaResult).abiSha3;
+//   esss.searchUsingAbi(sha).then((searchResult) => {
+//     console.log(searchResult);
+//   });
+// });
+
+document.querySelector("#s").addEventListener("click", function() {
+  var n = window.prompt("Enter the number:");
+  n && instance.set(n);
+});
+document.querySelector("#g").addEventListener("click", function() {
+  instance.get(function(e,d) {
+    console.log(d.toString());
+    alert(d.toString());
+  });
+});
+    </script>
+  </body>
+</html>
