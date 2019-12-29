@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>In morte del fratello Giovanni</title>
+    
+    <style type="text/css">
+    button {
+  background-color: #000;
+  color: #fff;
+  border: 0;
+  font-size: 1em;
+}
+    </style>
+  </head>
+  <body>
+    <h1>In Morte del fratello Giovanni</h1>
+<button id="g">Get Data</button>
+<div id="messaggio"></div>
+
+    <script type="text/javascript">
+    window.BuidlProviders = {
+      web3: {
+        url: "https://devchain.secondstate.io:8545",
+        chainId: "27183",
+        gasPrice: "0",
+        gasLimit: "8192000000",
+      },
+      es: {
+        url: "https://devchain.ss.search.secondstate.io"
+      }
+    }
+    </script>
+    <script type="text/javascript" src="https://buidl.secondstate.io/embed/main.js"></script>
+    
+    <script type="text/javascript">
+    /* Don't modify */
+var abi = [{"constant":true,"inputs":[],"name":"get","outputs":[{"name":"","type":"string"}],"payable":false,"stateMutability":"view","type":"function"}];
+var bytecode = '608060405260a060405190810160405280607981526020017f556e2064c3ac2c207327696f206e6f6e20616e6472c3b22073656d707265206681526020017f756767656e646f0a2064692067656e746520696e2067656e74652c206d65207681526020017f65647261692073656475746f0a207375206c6120747561207069657472612c2081526020017f6f2066726174656c206d696f2c2067656d656e646f0a20612e00000000000000815250600090805190602001906100c29291906100d5565b503480156100cf57600080fd5b5061017a565b82805460018160011615610100020d166002900490600052602060002090601f016020900481019282601f1061011657805160ff1916838001178555610144565b82800160010185558215610144579182015b82811115610143578251825591602001919060010190610128565b5b5090506101519190610155565b5090565b61017791905b8082111561017357600081600090555060010161015b565b5090565b90565b6101a4806101896000396000f300608060405260043610610041576000357c0100000000000000000000000000000000000000000000000000000000900463ffffffff1680636d4ce63c14610046575b600080fd5b34801561005257600080fd5b5061005b6100d6565b6040518080602001828103825283818151815260200191508051906020019080838360005b8381101561009b578082015181840152602081019050610080565b50505050905090810190601f1680156100c85780820d805160018360200d6101000a0d1916815260200191505b509250505060405180910390f35b60606000805460018160011615610100020d166002900480601f016020809104026020016040519081016040528092919081815260200182805460018160011615610100020d1660029004801561016e5780601f106101435761010080835404028352916020019161016e565b820191906000526020600020905b8154815290600101906020018083116101515782900d601f168201915b50505050509050905600a165627a7a7230582095e7a23426c531e4cc61215793098a8cbd2746829ce40f48b9b514e85d2aa7610029';
+var cAddr = '0x244de4ed801c47ebcbf0d4779ecd64c95eae8c6f';
+/* Don't modify */
+
+var instance = null;
+window.addEventListener('web3Ready', function() {
+  var contract = web3.ss.contract(abi);
+  instance = contract.at(cAddr);
+});
+
+// esss.shaAbi(JSON.stringify(abi)).then((shaResult) => {
+//   var sha = JSON.parse(shaResult).abiSha3;
+//   esss.searchUsingAbi(sha).then((searchResult) => {
+//     console.log(searchResult);
+//   });
+// });
+
+document.querySelector("#g").addEventListener("click", function() {
+  instance.get(function(e,d) {
+    document.querySelector("#messaggio").innerHTML=d.replace(/\n/g, "<br>");
+  });
+});
+    </script>
+  </body>
+</html>
