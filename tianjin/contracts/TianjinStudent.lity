@@ -1,0 +1,23 @@
+pragma solidity >=0.4.0 <0.6.0;
+
+contract TianjinStudent {
+  string private name;
+  bool private isFemale;
+  string private birth; // mm/dd/yy
+  string private certId;
+  string private date;
+  string private url;
+
+  constructor (string _name, bool _isFemale, string _birth, string _certId, string _url ) public {
+    name = _name;
+    isFemale = _isFemale;
+    birth = _birth;
+    certId = _certId;
+    url = _url;
+    date = "9/10/2020";
+  }
+
+  function get() public view returns (string, bool, string, string, string, string) {
+    return (name, isFemale, birth, certId, date, url);
+  }
+}

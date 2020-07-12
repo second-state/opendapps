@@ -1,0 +1,91 @@
+hello
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script type="text/javascript">
+var abi = '';
+var bin = '';
+var students = '';
+
+$(function() {
+	getAbi();
+	getBin();
+	getStudents();
+
+	create();
+})
+
+var getAbi = function () {
+    $.ajax({
+        url: '../contracts/TianjinStudent.abi',
+        sync: true,
+        dataType: 'text',
+        success: function (data) {
+            abi = JSON.parse(data);
+        }
+    });
+}
+
+var getBin = function () {
+    $.ajax({
+        url: '../contracts/TianjinStudent.bin',
+        dataType: 'text',
+        sync: true,
+        success: function (data) {
+            bin = data;
+        }
+    });
+}
+
+var getStudents = function () {
+    $.ajax({
+        url: './students.js',
+        sync: true,
+        dataType: 'text',
+        success: function (data) {
+            students = JSON.parse(data);
+        }
+    });
+}
+
+var create = function() {
+	web3.cmt.getAccounts(function (e, address) {
+		var userAddress = address.toString();
+	
+		const date = "9/10/2020";
+		contract_address = '';
+		students.forEach((user) => {
+			var contract = web3.cmt.contract(abi);
+	        var data = '0x' + contract.new.getData(user.name, user.isFemale, user.birth, user.certId, user.url, {data: bin});
+	        contract.new([user.name, user.isFemale, user.birth, user.certId, user.url], {
+	        	from: userAddress.toString(),
+                data: data,
+                gas: '9999000',
+                gasPrice: 2000000000
+	        }, function(e, instance) {
+	        	var checkTransactionTimer = setInterval(function () {
+	        		if (typeof(instance) != 'undefined')
+	        		{
+		        		web3.cmt.getTransactionReceipt(instance.transactionHash, function (error, result) {
+	                        if (!error) {
+	                            if (result != null && result.status == '0x1') {
+	                                clearInterval(checkTransactionTimer);
+	                                if (result.contractAddress != undefined) {
+	                                    console.log(user.name, result.contractAddress)
+	                                }
+	                                //  else if (result.address != undefined) {
+	                                //     // window.location.href = baseUrl + "qrcode.html?code=" + result.address;
+	                                // } 
+	                                else {
+	                                    console.error("Could not get a contract address");
+	                                }
+	                            } 
+	                            
+	                        }
+	                    })	
+	        		}
+	        	}, 3000);
+	        })
+		})
+	        
+	})	
+}
+</script>

@@ -1,0 +1,102 @@
+.container {
+	max-width: 800px;
+	margin: 0 auto;
+}
+#student-certificate {
+	width: 800px;
+	height: 575px;
+}
+#student-certificate-canvas {
+	
+}
+.float-certificate {
+	background-image: url("university-logo.png");
+	width: 800px;
+	height: 575px;
+	background-repeat: no-repeat;
+  	background-size: cover;
+  	position: absolute;
+  	z-index: 1000;
+}
+.certificate {
+	background-image: url("certificate2.png");
+	width: 800px;
+	height: 575px;
+	background-repeat: no-repeat;
+  	background-size: cover;
+  	position: absolute;
+}
+.certificate .avator {
+	position: absolute;
+	height: 91px;
+    width: 87px;
+    right: 115px;
+    top: 112px;
+    object-fit: contain;
+}
+@font-face {
+	font-family: FangSong;
+	src: url(../fonts/FangZhengFangSongJianTi.ttf);
+}
+.certificate .content {
+    width: 72%;
+    display: block;
+    margin: 208px auto 0;
+    font-size: larger;
+    line-height: 35px;
+}
+
+.certificate .p1 {
+    text-indent: 30px;
+}
+
+.certificate .p2 {
+	margin: 35px 0;
+}
+
+.certificate .text {
+	font-family: FangSong, sans-serif;
+    font-style: normal;
+    font-weight: 600;
+    letter-spacing: 1.9px;
+}
+
+.certificate .footer {
+    display: block;
+    margin: -21px 0 0 370px;
+    line-height: 38px;
+    font-size: 15px;
+}
+
+.certificate .qrcode  {
+	width: 66px;
+	height: 66px;
+	position: absolute;
+	left: 143px;
+	bottom: 106.6px;
+}
+
+.qrcode-overlay {
+	position:absolute;
+	left: 167px;
+	bottom: 127px;
+	margin:auto;
+	z-index: 100;
+	width: 22px;
+	height: 22px;
+	background-color: white;
+}
+
+.certificate .desc {
+	position: absolute;
+	font-size: 8.9px;
+    letter-spacing: 0px;
+    line-height: 10px;
+	left: 143px;
+	bottom: 65px;
+}
+
+#contract_addr {
+	letter-spacing: 0px;
+	/*font-size: 13px;*/
+}

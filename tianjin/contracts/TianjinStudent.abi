@@ -1,0 +1,63 @@
+[
+  {
+    "constant": true,
+    "inputs": [],
+    "name": "get",
+    "outputs": [
+      {
+        "name": "",
+        "type": "string"
+      },
+      {
+        "name": "",
+        "type": "bool"
+      },
+      {
+        "name": "",
+        "type": "string"
+      },
+      {
+        "name": "",
+        "type": "string"
+      },
+      {
+        "name": "",
+        "type": "string"
+      },
+      {
+        "name": "",
+        "type": "string"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "name": "_name",
+        "type": "string"
+      },
+      {
+        "name": "_isFemale",
+        "type": "bool"
+      },
+      {
+        "name": "_birth",
+        "type": "string"
+      },
+      {
+        "name": "_certId",
+        "type": "string"
+      },
+      {
+        "name": "_url",
+        "type": "string"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "constructor"
+  }
+]
