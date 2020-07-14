@@ -2,6 +2,20 @@
 	max-width: 800px;
 	margin: 0 auto;
 }
+
+a:link, a:visited {
+  background-color: darkorange;
+  color: white;
+  padding: 14px 25px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+}
+
+a:hover, a:active {
+  background-color: brown;
+}
+
 #student-certificate {
 	width: 800px;
 	height: 575px;
@@ -66,6 +80,8 @@
     margin: -21px 0 0 370px;
     line-height: 38px;
     font-size: 15px;
+    position: absolute;
+    right: 70px;
 }
 
 .certificate .qrcode  {
@@ -96,7 +112,9 @@
 	bottom: 65px;
 }
 
+
 #contract_addr {
-	letter-spacing: 0px;
-	/*font-size: 13px;*/
+	text-transform: uppercase;
+	letter-spacing: -0.4px;
+	font-size: 14px;
 }

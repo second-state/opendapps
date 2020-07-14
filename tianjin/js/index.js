@@ -48,6 +48,7 @@ var getInfo = function () {
         if(!e) {
             contract = web3.cmt.contract(abi);
             var contract_address = getUrlParameter("contract");
+            var save_or_not = getUrlParameter("save");
             instance = contract.at(contract_address);
             instance.get(function (e, r) {
                 if (!e) {
@@ -67,35 +68,46 @@ var getInfo = function () {
                     [date_mm, date_dd, date_yy] = r[5].split('/');
                     setDate("date_yy", "date_mm", "date_dd", date_yy, date_mm, date_dd);
 
-                    //get image base64 code because html2canvas cannot convert the images not reside in the same origin
-                    $.ajax(r[6], {
-                      dataType: 'binary',
-                      xhr() {
-                        let myXhr = jQuery.ajaxSettings.xhr();
-                        myXhr.responseType = 'blob';
-                        return myXhr;
-                      }
-                    }).then((response) => {
-                      // response is a Blob
-                      return new Promise((resolve, reject) => {
-                        let reader = new FileReader();
-                        reader.addEventListener('load', () => {
-                          // reader.result holds a data URL representation of response
-                          resolve(reader.result);
-                          $("#avator").attr("src", reader.result)
-                          //convert certificate to canvas
-                          html2canvas(document.querySelector("#student-certificate")).then(canvas => {
-                                $("#student-certificate").replaceWith(canvas)
-                            });
-                        }, false);
-                        reader.addEventListener('error', () => {
-                          reject(reader.error);
-                        }, false);
-                        reader.readAsDataURL(response);
-                      });
-                    });
+                    if (save_or_not == 1) {
+                        console.log("save image");
+                        //get image base64 code because html2canvas cannot convert the images not reside in the same origin
+                        $.ajax(r[6], {
+                          dataType: 'binary',
+                          xhr() {
+                            let myXhr = jQuery.ajaxSettings.xhr();
+                            myXhr.responseType = 'blob';
+                            return myXhr;
+                          }
+                        }).then((response) => {
+                          // response is a Blob
+                          return new Promise((resolve, reject) => {
+                            let reader = new FileReader();
+                            reader.addEventListener('load', () => {
+                              // reader.result holds a data URL representation of response
+                              resolve(reader.result);
+                              $("#avator").attr("src", reader.result)
+                              //convert certificate to canvas
+                              html2canvas(document.querySelector("#student-certificate")).then(canvas => {
+                                var img = canvas.toDataURL("image/jpeg");
+                                var a = $("<a>")
+                                    .attr("href", img)
+                                    .attr("download", r[0] + ".jpg")
+                                    .appendTo(".container")
+                                    .text("download my certficate");
+                                $("#student-certificate").replaceWith('<img src="'+img+'"/>');
+                              });
+                            }, false);
+                            reader.addEventListener('error', () => {
+                              reject(reader.error);
+                            }, false);
+                            reader.readAsDataURL(response);
+                          });
+                        });
+                    } else {
+                        $("#avator").attr("src", r[6])
+                    }
 
-                    $('#contract_addr').text(contract_address);                 
+                    $('#contract_addr').text(contract_address.slice(2));                 
                 } else {
                     console.log(e)
                 }
