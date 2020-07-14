@@ -27,6 +27,10 @@
       {
         "name": "",
         "type": "string"
+      },
+      {
+        "name": "",
+        "type": "string"
       }
     ],
     "payable": false,

@@ -4,8 +4,9 @@ contract TianjinStudent {
   string private name;
   bool private isFemale;
   string private birth; // mm/dd/yy
+  string private prog_date;
   string private certId;
-  string private date;
+  string private cert_date;
   string private url;
 
   constructor (string _name, bool _isFemale, string _birth, string _certId, string _url ) public {
@@ -14,10 +15,11 @@ contract TianjinStudent {
     birth = _birth;
     certId = _certId;
     url = _url;
-    date = "9/10/2020";
+    prog_date = "5/1/2019-4/30/2020";
+    cert_date = "7/18/2020";
   }
 
-  function get() public view returns (string, bool, string, string, string, string) {
-    return (name, isFemale, birth, certId, date, url);
+  function get() public view returns (string, bool, string, string, string, string, string) {
+    return (name, isFemale, birth, certId, prog_date, cert_date, url);
   }
 }

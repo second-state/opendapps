@@ -66,6 +66,12 @@ var getBin = function () {
     });
 }
 
+var setDate = (id_yy, id_mm, id_dd, d_yy, d_mm, d_dd) => {
+    $("#" + id_yy).text(d_yy);
+    $("#" + id_mm).text(d_mm);
+    $("#" + id_dd).text(d_dd);
+}
+
 var getInfo = function () {
     web3.cmt.getAccounts(function(e, address) {
         if(!e) {
@@ -80,12 +86,18 @@ var getInfo = function () {
                     $('#birth_yy').text(birth_yy);
                     $('#birth_mm').text(birth_mm);
                     $('#certId').text(r[3]);
-                    [date_mm, date_dd, date_yy] = r[4].split('/');
-                    $('#date_yy').text(date_yy);
-                    $('#date_mm').text(date_mm);
-                    $('#date_dd').text(date_dd);
+                    //
+                    [start_date, end_date] = r[4].split('-');
+                    [s_mm, s_dd, s_yy] = start_date.split('/');
+                    [e_mm, e_dd, e_yy] = start_date.split('/');
+                    setDate("s_yy", "s_mm", "s_dd", s_yy, s_mm, s_dd);
+                    setDate("e_yy", "e_mm", "e_dd", e_yy, e_mm, e_dd);
+
+                    [date_mm, date_dd, date_yy] = r[5].split('/');
+                    setDate("date_yy", "date_mm", "date_dd", date_yy, date_mm, date_dd);
+
                     //get image base64 code because html2canvas cannot convert the images not reside in the same origin
-                    $.ajax(r[5], {
+                    $.ajax(r[6], {
                       dataType: 'binary',
                       xhr() {
                         let myXhr = jQuery.ajaxSettings.xhr();

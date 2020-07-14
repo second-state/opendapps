@@ -19,7 +19,7 @@
   	z-index: 1000;
 }
 .certificate {
-	background-image: url("certificate2.png");
+	background-image: url("certificate.png");
 	width: 800px;
 	height: 575px;
 	background-repeat: no-repeat;
@@ -39,7 +39,7 @@
 	src: url(../fonts/FangZhengFangSongJianTi.ttf);
 }
 .certificate .content {
-    width: 72%;
+    width: 73%;
     display: block;
     margin: 208px auto 0;
     font-size: larger;
@@ -72,18 +72,18 @@
 	width: 66px;
 	height: 66px;
 	position: absolute;
-	left: 143px;
+	left: 143.7px;
 	bottom: 106.6px;
 }
 
 .qrcode-overlay {
 	position:absolute;
-	left: 167px;
+	left: 167.4px;
 	bottom: 127px;
 	margin:auto;
 	z-index: 100;
-	width: 22px;
-	height: 22px;
+	width: 22.4px;
+	height: 22.4px;
 	background-color: white;
 }
 
