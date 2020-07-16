@@ -57,7 +57,7 @@ a:hover, a:active {
 .certificate .content {
     width: 73%;
     display: block;
-    margin: 129px auto 0;
+    margin: 115px auto 0;
     font-size: larger;
     line-height: 35px;
 }
@@ -84,11 +84,11 @@ a:hover, a:active {
 
 .certificate .footer {
     display: block;
-    margin: -21px 0 0 370px;
     line-height: 38px;
     font-size: 15px;
     position: absolute;
     right: 70px;
+    bottom: 70px;
 }
 
 .certificate .qrcode  {
