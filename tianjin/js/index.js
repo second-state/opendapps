@@ -10,8 +10,8 @@ var getUrlParameter = function (name) {
 
 
 $(function () {
-    console.log(window.location.href);
-    let link = window.location.href;
+    let link = window.location.origin + window.location.pathname + "?contract=" + getUrlParameter("contract");
+    console.log(link);
     setTimeout(function () {
         new QRCode(document.getElementById("qrcode"), {
             text: link,
@@ -92,9 +92,9 @@ var getInfo = function () {
                                 var a = $("<a>")
                                     .attr("href", img)
                                     .attr("download", r[0] + ".jpg")
-                                    .appendTo(".container")
+                                    .insertBefore("#student-certificate")
                                     .text("download my certficate");
-                                $("#student-certificate").replaceWith('<img src="'+img+'"/>');
+                                // $("#student-certificate").replaceWith('<img src="'+img+'"/>');
                               });
                             }, false);
                             reader.addEventListener('error', () => {

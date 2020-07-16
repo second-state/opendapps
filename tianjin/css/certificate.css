@@ -6,7 +6,8 @@
 a:link, a:visited {
   background-color: darkorange;
   color: white;
-  padding: 14px 25px;
+  padding: 14px 20px;
+  margin-bottom: 20px; 
   text-align: center;
   text-decoration: none;
   display: inline-block;
@@ -40,6 +41,7 @@ a:hover, a:active {
   	background-size: cover;
   	position: absolute;
 }
+
 .certificate .avator {
 	position: absolute;
 	height: 91px;
@@ -55,11 +57,16 @@ a:hover, a:active {
 .certificate .content {
     width: 73%;
     display: block;
-    margin: 208px auto 0;
+    margin: 129px auto 0;
     font-size: larger;
     line-height: 35px;
 }
-
+.header {
+    display: flex;
+    justify-content: center;
+    margin: 79px auto 0;
+    font-size: 20.8px;
+}
 .certificate .p1 {
     text-indent: 30px;
 }
