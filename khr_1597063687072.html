@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>khr</title>
+    
+    <style type="text/css">
+    button {
+  background-color: #000;
+  color: #fff;
+  border: 0;
+  font-size: 1em;
+}
+    </style>
+  </head>
+  <body>
+    <!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <title>Rule-based rebate</title>
+  </head>
+  <body>
+    <div class="container">
+        <p><br/>Rebate rules</p>
+        <ul>
+            <li>Purchases of $100 or more gets 5% rebate</li>
+            <li>Each purchase can only get one rebate</li>
+            <li>Max rebate is $100 per person</li>
+        </ul>
+        <p>Use the <b>Add</b> button to add a purchase, and update the rebate.</p>
+        <h3>Record for <span id="name"></span></h3>
+        <table class="table">
+            <tbody id="tbody">
+                <tr>
+                    <td>Purchases</td>
+                    <td id="purchase"></td>
+                    <td><button class='btn btn-info btn-sm' onclick='buy(this)'>Add</button></td>
+                </tr>
+                <tr>
+                    <td>Rebate</td>
+                    <td id="rebate"></td>
+                    <td></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+  </body>
+</html>
+
+
+    <script type="text/javascript">
+    window.BuidlProviders = {
+      web3: {
+        url: "https://devchain.secondstate.io:8545",
+        chainId: "27183",
+        gasPrice: "0",
+        gasLimit: "8192000000",
+      },
+      es: {
+        url: "https://devchain.ss.search.secondstate.io"
+      }
+    }
+    </script>
+    <script type="text/javascript" src="https://buidl.secondstate.io/embed/main.js"></script>
+    
+    <script type="text/javascript">
+    var contract = window.web3 && web3.ss && web3.ss.contract(abi);
+var instance = contract && contract.at(cAddr);
+window.addEventListener('web3Ready', function() {
+  contract = web3.ss.contract(abi);
+  instance = contract.at(cAddr);
+  reload();
+});
+
+instance.getInfo.call (function (e, r) {
+  if (e) {
+    console.log(e);
+    return;
+  } else {
+    console.log(r);
+    document.querySelector("#name").innerHTML = r[0];
+    document.querySelector("#purchase").innerHTML = r[1];
+    document.querySelector("#rebate").innerHTML = r[2];
+  }
+});
+
+function buy (element) {
+  element.innerHTML = "Wait ...";
+  var n = window.prompt("Amount paid for purchase:");
+  n && instance.buy(n);
+  setTimeout(function () {
+    instance.getInfo.call (function (e, r) {
+      if (e) {
+        console.log(e);
+        return;
+      } else {
+        document.querySelector("#purchase").innerHTML = r[1];
+        document.querySelector("#rebate").innerHTML = r[2];
+        element.innerHTML = "Add";
+      }
+    });
+  }, 2 * 1000);
+}
+
+    </script>
+  </body>
+</html>
