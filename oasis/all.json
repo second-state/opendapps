@@ -15,7 +15,7 @@
   },
   "tweet": {
     "title": "Hackathon: OasisTweet",
-    "intro": "Publish your thoughts. Censorship resistant and no spam! <br/> People must pay YOU to leave comments on your post. <br/> See details <a href='http://oasiseth.org/hack'>http://oasiseth.org/hack</a>",
+    "intro": "Publish your thoughts. Censorship resistant and no spam! People must pay YOU to leave comments on your post. See details http://oasiseth.org/hack",
     "resources": {
       "css": ["https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"],
       "js": ["https://code.jquery.com/jquery-3.4.1.min.js"]
