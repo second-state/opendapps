@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>MyPersonalToken</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" />
+    <style type="text/css">
+    button {
+  background-color: #000;
+  color: #fff;
+  border: 0;
+  font-size: 1em;
+}
+    </style>
+  </head>
+  <body>
+    <div class="container">
+    <br/>
+    <div class="jumbotron">
+        <div class="view overlay rounded-top text-center">
+          <img src="" class="img-fluid" id="image">
+        </div>
+
+        <div class="card-body text-center mb-3">
+          <p class="card-text py-2" id="message"></p>
+        </div>
+
+        <hr/>
+        <form id="form">
+            <div class="form-group">
+                <label for="name">Name</label>
+                <input type="text" class="form-control" id="name" placeholder="">
+            </div>
+            <div class="form-group">
+                <label for="comment">Comment</label>
+                <input type="text" class="form-control" id="comment" placeholder="">
+            </div>
+            <p><span id="balance"></span><span id="pricealert"></span></p>
+            <button type="button" id="submit" class="btn btn-primary">Pay &amp; Comment</button>
+        </form>
+        <div id="formSubmitted" style="display:none">Please wait up to 10 seconds for confirmation ...</div>
+    </div>
+    
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th scope="col">Name</th>
+                <th scope="col">Comment</th>
+            </tr>
+        </thead>
+        <tbody id="comments">
+        </tbody>
+    </table>
+    <p style="text-align:center">All data recorded on the <a target="_blank" href="https://www.oasiseth.org">Oasis Ethereum</a> blockchain network.</p>
+</div>
+
+
+    <script type="text/javascript">
+    window.BuidlProviders = {
+      web3: {
+        url: "https://rpc.oasiseth.org:8545",
+        chainId: "69",
+        gasPrice: "1",
+        gasLimit: "8000000",
+      },
+      es: {
+        url: "https://devchain.ss.search.secondstate.io"
+      }
+    }
+    </script>
+    <script type="text/javascript" src="https://buidl.secondstate.io/embed/main.js"></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script type="text/javascript">
+    /* Don't modify */
+var abi = [{"constant":true,"inputs":[],"name":"name","outputs":[{"name":"","type":"string"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"name":"","type":"address"}],"name":"balances","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"name":"account","type":"address"}],"name":"balanceOf","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"symbol","outputs":[{"name":"","type":"string"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"to","type":"address"},{"name":"amount","type":"uint256"}],"name":"transfer","outputs":[{"name":"","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"inputs":[],"payable":false,"stateMutability":"nonpayable","type":"constructor"},{"payable":true,"stateMutability":"payable","type":"fallback"},{"anonymous":false,"inputs":[{"indexed":true,"name":"_from","type":"address"},{"indexed":true,"name":"_to","type":"address"},{"indexed":false,"name":"_value","type":"uint256"}],"name":"Transfer","type":"event"}];
+var bytecode = '6060604052341561000f57600080fd5b620f42406000819055506040805190810160405280600f81526020017f4d79506572736f6e616c546f6b656e0000000000000000000000000000000000815250600190805190602001906100649291906100fc565b506040805190810160405280600381526020017f4d50540000000000000000000000000000000000000000000000000000000000815250600290805190602001906100b09291906100fc565b50600054600360003373ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff168152602001908152602001600020819055506101a1565b828054600181600116156101000203166002900490600052602060002090601f016020900481019282601f1061013d57805160ff191683800117855561016b565b8280016001018555821561016b579182015b8281111561016a57825182559160200191906001019061014f565b5b509050610178919061017c565b5090565b61019e91905b8082111561019a576000816000905550600101610182565b5090565b90565b610613806101b06000396000f30060606040526004361061006d576000357c0100000000000000000000000000000000000000000000000000000000900463ffffffff16806306fdde031461006f57806327e235e3146100fd57806370a082311461014a57806395d89b4114610197578063a9059cbb14610225575b005b341561007a57600080fd5b61008261027f565b6040518080602001828103825283818151815260200191508051906020019080838360005b838110156100c25780820151818401526020810190506100a7565b50505050905090810190601f1680156100ef5780820380516001836020036101000a031916815260200191505b509250505060405180910390f35b341561010857600080fd5b610134600480803573ffffffffffffffffffffffffffffffffffffffff1690602001909190505061031d565b6040518082815260200191505060405180910390f35b341561015557600080fd5b610181600480803573ffffffffffffffffffffffffffffffffffffffff16906020019091905050610335565b6040518082815260200191505060405180910390f35b34156101a257600080fd5b6101aa61037e565b6040518080602001828103825283818151815260200191508051906020019080838360005b838110156101ea5780820151818401526020810190506101cf565b50505050905090810190601f1680156102175780820380516001836020036101000a031916815260200191505b509250505060405180910390f35b341561023057600080fd5b610265600480803573ffffffffffffffffffffffffffffffffffffffff1690602001909190803590602001909190505061041c565b604051808215151515815260200191505060405180910390f35b60018054600181600116156101000203166002900480601f0160208091040260200160405190810160405280929190818152602001828054600181600116156101000203166002900480156103155780601f106102ea57610100808354040283529160200191610315565b820191906000526020600020905b8154815290600101906020018083116102f857829003601f168201915b505050505081565b60036020528060005260406000206000915090505481565b6000600360008373ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff168152602001908152602001600020549050919050565b60028054600181600116156101000203166002900480601f0160208091040260200160405190810160405280929190818152602001828054600181600116156101000203166002900480156104145780601f106103e957610100808354040283529160200191610414565b820191906000526020600020905b8154815290600101906020018083116103f757829003601f168201915b505050505081565b6000610467600360003373ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200190815260200160002054836105a5565b600360003373ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff168152602001908152602001600020819055506104f3600360008573ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200190815260200160002054836105c6565b600360008573ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff168152602001908152602001600020819055508273ffffffffffffffffffffffffffffffffffffffff163373ffffffffffffffffffffffffffffffffffffffff167fddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef846040518082815260200191505060405180910390a36001905092915050565b6000808383111515156105b757600080fd5b82840390508091505092915050565b60008082840190508381101515156105dd57600080fd5b80915050929150505600a165627a7a723058201dcda58e70f63ec4c0d15c094e8ccf0a8a2b1ccb821805f6676f088dbe1eb0030029';
+var cAddr = '0xe027551449cfb367e250481d54f94570278eecc8';
+/* Don't modify */
+
+var instance = null;
+window.addEventListener('web3Ready', function() {
+  var contract = web3.ss.contract(abi);
+  instance = contract.at(cAddr);
+  reload();
+});
+
+var price = "0"; // This is in the unit of OETH. e.g., 0.01
+
+function reload() {
+    instance.message(function (e, r) {
+        $("#message").html(r);
+    });
+    instance.image(function (e, r) {
+        $("#image").prop("src", r);
+    });
+    instance.price(function (e, r) {
+        price = r;
+        $("#pricealert").html("Requires " + price + " wei to comment");
+    });
+    
+    $("#formSubmitted").css("display", "none");
+    web3.ss.getAccounts(function (e, address) {
+        if (!e) {
+            var balance = web3.ss.getBalance(address[0]);
+            $("#balance").html("You have " + balance + " wei OETH in your current account. ");
+
+            var comments = "";
+            instance.getAddrs(function (ee, addrs) {
+                addrs.forEach(function(addr) {
+                    instance.getComment(addr, function (ee, r) {
+                        if (!ee) {
+                            comments = comments + "<tr><td>" + r[0] + "</td><td>" + r[1] + "</td></tr>";
+                            $("#comments").html(comments);
+                        }
+                    });
+                });
+            });
+            $("#comments").html(comments);
+        }
+    });
+}
+
+$("#submit").click(function() {
+    if ((!$("#name").val().trim()) || (!$("#comment").val().trim())) {
+      alert("Please enter both a name and a comment");
+      return false;
+    }
+    web3.ss.getAccounts(function (e, address) {
+        if (!e) {
+            $("#form").css("display", "none");
+            $("#formSubmitted").css("display", "block");
+            instance.addComment ($("#name").val(), $("#comment").val(), {
+                value: price,
+                gas: 499000,
+                gasPrice: 1
+            }, function (ee, r) {
+                if (ee) {
+                    window.alert("You need to pay " + price + " OETH to comment. Make sure that you have it in your address.");
+                }
+            });
+            setTimeout(function () {
+                reload ();
+            }, 10 * 1000);
+        }
+    });
+    return false;
+});
+
+    </script>
+  </body>
+</html>
