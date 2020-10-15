@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>Voting Dapp</title>
+    
+    <style type="text/css">
+    button {
+  background-color: #000;
+  color: #fff;
+  border: 0;
+  font-size: 1em;
+}
+    </style>
+  </head>
+  <body>
+    <!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>Ethereum Voting Dapp</title>
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css" integrity="sha384-Zug+QiDoJOrZ5t4lssLdxGhVrurbmBWopoEl+M6BdEfwnCJZtKxi1KgxUyJq13dy" crossorigin="anonymous">
+    
+  </head>
+  <body>
+    <div class="container">
+      <div class="row">
+        <div>
+          <h1 class="text-center">Ethereum Voting Dapp</h1>
+          <hr/>
+          <br/>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-4">
+          <p>Add ID and click candidate to vote</p>
+          <div class="input-group mb-3">
+            <input type="text" class="form-control" id="id-input" placeholder="Enter ID">
+          </div>
+          <div class="candidate-box"></div>
+          <button class="btn btn-primary" id="vote">Vote</button>
+          <div class="msg"></div>
+        </div>
+        <div class="col-md-6">
+            <button class="btn btn-primary" id="findNumOfVotes">Count Votes</button>
+            <div id="vote-box"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/js/bootstrap.min.js" integrity="sha384-a5N7Y/aK3qNeh15eJKGWxsqtnX/wWdSZSKp+81YjTmS15nvnvxKHuzaWwXHDli+4" crossorigin="anonymous"></script>
+
+  </body>
+</html>
+
+
+    <script type="text/javascript">
+    window.BuidlProviders = {
+      web3: {
+        url: "https://rpc.oasiseth.org:8545",
+        chainId: "69",
+        gasPrice: "1",
+        gasLimit: "8000000",
+      },
+      es: {
+        url: ""
+      }
+    }
+    </script>
+    <script type="text/javascript" src="https://buidl.secondstate.io/embed/main.js"></script>
+    
+    <script type="text/javascript">
+    /* Don't modify */
+var abi = [{"constant":true,"inputs":[{"name":"candidateID","type":"uint256"}],"name":"totalVotes","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"name":"candidateID","type":"uint256"}],"name":"getCandidate","outputs":[{"name":"","type":"uint256"},{"name":"","type":"bytes32"},{"name":"","type":"bytes32"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"getNumOfVoters","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"uid","type":"bytes32"},{"name":"candidateID","type":"uint256"}],"name":"vote","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"name","type":"bytes32"},{"name":"party","type":"bytes32"}],"name":"addCandidate","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"getNumOfCandidates","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"anonymous":false,"inputs":[{"indexed":false,"name":"candidateID","type":"uint256"}],"name":"AddedCandidate","type":"event"}];
+var bytecode = '6060604052341561000f57600080fd5b6103f58061001e6000396000f300606060405260043610610078576000357c0100000000000000000000000000000000000000000000000000000000900463ffffffff16806319e6e1581461007d57806335b8e820146100b457806365fc783c146101095780639ef1204c14610132578063a1adbb2514610162578063e8685ba114610196575b600080fd5b341561008857600080fd5b61009e60048080359060200190919050506101bf565b6040518082815260200191505060405180910390f35b34156100bf57600080fd5b6100d56004808035906020019091905050610214565b6040518084815260200183600019166000191681526020018260001916600019168152602001935050505060405180910390f35b341561011457600080fd5b61011c610255565b6040518082815260200191505060405180910390f35b341561013d57600080fd5b61016060048080356000191690602001909190803590602001909190505061025f565b005b341561016d57600080fd5b610194600480803560001916906020019091908035600019169060200190919050506102f3565b005b34156101a157600080fd5b6101a96103c0565b6040518082815260200191505060405180910390f35b6000806000809150600090505b60015481101561020a5783600360008381526020019081526020016000206001015414156101fd5781806001019250505b80806001019150506101cc565b8192505050919050565b600080600083600260008681526020019081526020016000206000015460026000878152602001908152602001600020600101549250925092509193909250565b6000600154905090565b6000600115156002600084815260200190815260200160002060020160009054906101000a900460ff16151514156102ee5760016000815480929190600101919050559050604080519081016040528084600019168152602001838152506003600083815260200190815260200160002060008201518160000190600019169055602082015181600101559050505b505050565b600080600081548092919060010191905055905060606040519081016040528084600019168152602001836000191681526020016001151581525060026000838152602001908152602001600020600082015181600001906000191690556020820151816001019060001916905560408201518160020160006101000a81548160ff0219169083151502179055509050507fec542c373a064661ffef02d633752debf28f3e6c9f253680822d9ccf8b47aec6816040518082815260200191505060405180910390a1505050565b600080549050905600a165627a7a72305820e0db827fe0087c3387263404e874957a67b655cb09e81b8a0f8892de2aa820a90029';
+var cAddr = '0xdb95c8a49cf354152421c321b667c0de09fcf384';
+/* Don't modify */
+
+/*
+ * This holds all the functions for the app
+ */
+window.App = {
+  // called when web3 is set up
+  start: function() { 
+		instance.getNumOfCandidates(function(numOfCandidates){
+			console.log("1", numOfCandidates)
+			if (numOfCandidates == 0 || numOfCandidates==null){
+				console.log("2", numOfCandidates)
+				instance.addCandidate("Candidate1","Democratic",function(e, result){
+          console.log("3e", e)
+					console.log("3", result)
+					$("#candidate-box").append(`<div class='form-check'><input class='form-check-input' type='checkbox' value='' id=${result.logs[0].args.candidateID}><label class='form-check-label' for=0>Candidate1</label></div>`)
+          instance.addCandidate("Candidate2","Republican",function(result){
+            console.log("4e", e)
+            console.log("4", result)
+			      $("#candidate-box").append(`<div class='form-check'><input class='form-check-input' type='checkbox' value='' id=${result.logs[0].args.candidateID}><label class='form-check-label' for=1>Candidate1</label></div>`)
+	        })
+				})
+			  
+			  numOfCandidates = 2 
+			}else { 
+			  for (var i = 0; i < numOfCandidates; i++ ){
+					instance.getCandidate(i,function(data){
+					  $("#candidate-box").append(`<div class="form-check"><input class="form-check-input" type="checkbox" value="" id=${data[0]}><label class="form-check-label" for=${data[0]}>${window.web3.toAscii(data[1])}</label></div>`)
+					})
+			  }
+			}
+			window.numOfCandidates = numOfCandidates 
+		})
+  },
+
+  // Function that is called when user clicks the "vote" button
+  vote: function() {
+    var uid = $("#id-input").val() //getting user inputted id
+
+    // Application Logic 
+    if (uid == ""){
+      $("#msg").html("<p>Please enter id.</p>")
+      console.log("333"+" vote")
+      return
+    }
+    // Checks whether a candidate is chosen or not.
+    // if it is, we get the Candidate's ID, which we will use
+    // when we call the vote function in Smart Contracts
+    if ($("#candidate-box :checkbox:checked").length > 0){ 
+      // just takes the first checked box and gets its id
+      var candidateID = $("#candidate-box :checkbox:checked")[0].id
+      console.log("333"+" vote")
+    } 
+    else {
+      // print message if user didn't vote for candidate
+      $("#msg").html("<p>Please vote for a candidate.</p>")
+      console.log("333"+" vote")
+      return
+    }
+    instance.vote(uid,parseInt(candidateID),function(result){
+      $("#msg").html("<p>Voted</p>")
+    })
+  },
+
+  // function called when the "Count Votes" button is clicked
+  findNumOfVotes: function() {
+    // this is where we will add the candidate vote Info before replacing whatever is in #vote-box
+      var box = $("<section></section>") 
+
+      // loop through the number of candidates and display their votes
+      for (var i = 0; i < window.numOfCandidates; i++){
+        // calls two smart contract functions
+        var candidatePromise = instance.getCandidate(i)
+        var votesPromise = instance.totalVotes(i)
+
+        // resolves Promises by adding them to the variable box
+        Promise.all([candidatePromise,votesPromise],function(data){
+          box.append(`<p>${window.web3.toAscii(data[0][1])}: ${data[1]}</p>`)
+        }).catch(function(err){ 
+          console.log("ERROR! " + err.message)
+        })
+      }
+      $("#vote-box").html(box) // displays the "box" and replaces everything that was in it before
+  }
+}
+
+// When the page loads, we create a web3 instance and set a provider. We then set up the app
+
+var instance = null;
+var VotingContract = null;
+window.addEventListener('web3Ready', function() {
+  VotingContract = web3.ss.contract(abi);
+  instance = VotingContract.at(cAddr);
+  window.App.start();
+});
+
+document.querySelector("#vote").addEventListener("click", function() {
+  window.App.vote();
+});
+document.querySelector("#findNumOfVotes").addEventListener("click", function() {
+  window.App.findNumOfVotes();
+});
+
+    </script>
+  </body>
+</html>
