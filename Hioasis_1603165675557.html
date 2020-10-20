@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>Hioasis</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" />
+    <style type="text/css">
+    button {
+  background-color: #000;
+  color: #fff;
+  border: 0;
+  font-size: 1em;
+}
+
+    </style>
+  </head>
+  <body>
+    <div class="container">
+   <br/>
+   <div class="jumbotron">
+      <p class="lead" id="greeting"></p>
+      <div id="imageDiv" style="display:none">
+         <img id="image" src="" class="img-fluid img-thumbnail"/>
+      </div>
+      <hr/>
+      <p id="votes" style="display:none">
+         <span id="ups"></span> voted 👍 |
+         <span id="downs"></span> voted 👎
+      </p>
+      <form id="form" class="form-inline" style="display:none">
+         <button id="voteUp" type="button" onclick="return vote(1);" class="btn btn-secondary mb-2">👍</button>
+         <button id="voteDown" type="button" onclick="return vote(-1);" class="btn btn-secondary mb-2">👎</button>
+      </form>
+      <div id="formSubmitted" style="display:none">Please wait 2 seconds ...</div>
+      <div id="myVoteUp" style="display:none">You have already voted 👍</div>
+      <div id="myVoteDown" style="display:none">You have already voted 👎</div>
+   </div>
+</div>
+
+    <script type="text/javascript">
+    window.BuidlProviders = {
+      web3: {
+        url: "https://rpc.oasiseth.org:8545",
+        chainId: "69",
+        gasPrice: "1",
+        gasLimit: "8000000",
+      },
+      es: {
+        url: "https://devchain.ss.search.secondstate.io"
+      }
+    }
+    </script>
+    <script type="text/javascript" src="https://buidl.secondstate.io/embed/main.js"></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script type="text/javascript">
+    /* Don't modify */
+var abi = [{"constant":true,"inputs":[],"name":"getVotes","outputs":[{"name":"","type":"uint256"},{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"_choice","type":"int256"}],"name":"vote","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[{"name":"_addr","type":"address"}],"name":"getVote","outputs":[{"name":"","type":"int256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"_greeting","type":"string"},{"name":"_photoUrl","type":"string"}],"name":"constructor","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"photoUrl","outputs":[{"name":"","type":"string"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"greeting","outputs":[{"name":"","type":"string"}],"payable":false,"stateMutability":"view","type":"function"}];
+var bytecode = '6060604052341561000f57600080fd5b6106978061001e6000396000f300606060405260043610610078576000357c0100000000000000000000000000000000000000000000000000000000900463ffffffff1680630dc960151461007d5780633891c320146100ad5780638d337b81146100d0578063d4d8c5c31461011d578063e7c42abc146101bd578063ef690cc01461024b575b600080fd5b341561008857600080fd5b6100906102d9565b604051808381526020018281526020019250505060405180910390f35b34156100b857600080fd5b6100ce60048080359060200190919050506102ea565b005b34156100db57600080fd5b610107600480803573ffffffffffffffffffffffffffffffffffffffff1690602001909190505061040f565b6040518082815260200191505060405180910390f35b341561012857600080fd5b6101bb600480803590602001908201803590602001908080601f0160208091040260200160405190810160405280939291908181526020018383808284378201915050505050509190803590602001908201803590602001908080601f01602080910402602001604051908101604052809392919081815260200183838082843782019150505050505091905050610458565b005b34156101c857600080fd5b6101d061048a565b6040518080602001828103825283818151815260200191508051906020019080838360005b838110156102105780820151818401526020810190506101f5565b50505050905090810190601f16801561023d5780820380516001836020036101000a031916815260200191505b509250505060405180910390f35b341561025657600080fd5b61025e610528565b6040518080602001828103825283818151815260200191508051906020019080838360005b8381101561029e578082015181840152602081019050610283565b50505050905090810190601f1680156102cb5780820380516001836020036101000a031916815260200191505b509250505060405180910390f35b600080600354600454915091509091565b6000600260003373ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff1681526020019081526020016000205414151561033857600080fd5b600181148061036657507fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff81145b151561037157600080fd5b80600260003373ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff1681526020019081526020016000208190555060018114156103d1576003600081548092919060010191905055505b7fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff81141561040c576004600081548092919060010191905055505b50565b6000600260008373ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff168152602001908152602001600020549050919050565b816000908051906020019061046e9291906105c6565b5080600190805190602001906104859291906105c6565b505050565b60018054600181600116156101000203166002900480601f0160208091040260200160405190810160405280929190818152602001828054600181600116156101000203166002900480156105205780601f106104f557610100808354040283529160200191610520565b820191906000526020600020905b81548152906001019060200180831161050357829003601f168201915b505050505081565b60008054600181600116156101000203166002900480601f0160208091040260200160405190810160405280929190818152602001828054600181600116156101000203166002900480156105be5780601f10610593576101008083540402835291602001916105be565b820191906000526020600020905b8154815290600101906020018083116105a157829003601f168201915b505050505081565b828054600181600116156101000203166002900490600052602060002090601f016020900481019282601f1061060757805160ff1916838001178555610635565b82800160010185558215610635579182015b82811115610634578251825591602001919060010190610619565b5b5090506106429190610646565b5090565b61066891905b8082111561066457600081600090555060010161064c565b5090565b905600a165627a7a72305820ed05b33a7a7885decb6456f78ad1ca50ad7840c14166e5ce9bb246832f62f3d60029';
+var cAddr = '0xc04c3761716463aec14245efc109b79bd6591df7';
+/* Don't modify */
+
+var instance = null;
+window.addEventListener('web3Ready', function() {
+  var contract = web3.ss.contract(abi);
+  instance = contract.at(cAddr);
+  reload();
+});
+
+function reload() {
+    instance.greeting(function (e, r) {
+        $("#greeting").html(r);
+    });
+    instance.photoUrl(function (e, r) {
+        if (!e && r) {
+            $("#imageDiv").css("display", "block");
+            $("#image").attr("src", r);
+        }
+    });
+    instance.getVotes(function (e, r) {
+        if (!e && (r[0] > 0 || r[1] > 0)) {
+            $("#votes").css("display", "block");
+            $("#ups").text(r[0]);
+            $("#downs").text(r[1]);
+        }
+    });
+
+    $("#form").css("display", "none");
+    $("#formSubmitted").css("display", "none");
+    web3.ss.getAccounts(function (e, address) {
+        if (!e) {
+            instance.getVote(address, function (ee, r) {
+                if (r == 1) {
+                    $("#myVoteUp").css("display", "block");
+                } else if (r == -1) {
+                    $("#myVoteDown").css("display", "block");
+                } else {
+                    $("#form").css("display", "block");
+                }
+            });
+        }
+    });
+}
+
+function vote (choice) {
+    web3.ss.getAccounts(function (e, address) {
+        if (!e) {
+            $("#form").css("display", "none");
+            $("#formSubmitted").css("display", "block");
+            instance.vote(choice, function (ee, result) {
+                if (ee) {
+                    window.alert("Failed for " + address);
+                }
+            });
+            setTimeout(function () {
+                reload ();
+            }, 2 * 1000);
+        }
+    });
+    return false;
+}
+    </script>
+  </body>
+</html>
