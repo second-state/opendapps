@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>RedEnvelope</title>
+    
+    <style type="text/css">
+    button {
+  background-color: #000;
+  color: #fff;
+  border: 0;
+  font-size: 1em;
+}
+
+    </style>
+  </head>
+  <body>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <div class="container">
+        <ul class="nav nav-tabs" id="myTab" role="tablist">
+            <li class="nav-item">
+                <a class="nav-link active" id="create-tab" data-toggle="tab" href="#create" role="tab" aria-controls="open" aria-selected="true">Open</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="open-tab" data-toggle="tab" href="#open" role="tab" aria-controls="create" aria-selected="false">Create</a>
+            </li>
+            </ul>
+        <div class="tab-content" id="myTabContent">
+            <div class="tab-pane fade show active" id="create" role="tabpanel" aria-labelledby="create-tab">
+                <form onsubmit="return false">
+                    <span id="message">&nbsp;</span>
+                    <div class="form-group">
+                        <label for="addr">From:</label><input type="text" id="addr" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="pass">Pass:</label><input type="number" id="pass" class="form-control">
+                    </div>
+                    <button type="submit" class="btn btn-primary" id="open-btn">Open</button>
+                </form>
+            </div>
+            <div class="tab-pane fade" id="open" role="tabpanel" aria-labelledby="open-tab">
+                <form onsubmit="return false">
+                    <span>&nbsp;</span>
+                    <div class="form-group">
+                        <label for="addr">Value:</label><input type="number" id="value" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="message_">Message:</label><input type="text" id="message_" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="pass_">Pass:</label><input type="number" id="pass_" class="form-control">
+                    </div>
+                    <button type="submit" class="btn btn-primary" id="create-btn">Create</button>
+                </form>
+
+            </div>
+        </div>
+    </div>
+    
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+    <script type="text/javascript">
+    window.BuidlProviders = {
+      web3: {
+        url: "https://rpc.oasiseth.org:8545",
+        chainId: "69",
+        gasPrice: "1",
+        gasLimit: "8000000",
+      },
+      es: {
+        url: "https://devchain.ss.search.secondstate.io"
+      }
+    }
+    </script>
+    <script type="text/javascript" src="https://buidl.secondstate.io/embed/main.js"></script>
+    
+    <script type="text/javascript">
+    /* Don't modify */
+var abi = [{"constant":false,"inputs":[{"name":"addr","type":"address"},{"name":"pass","type":"uint256"}],"name":"open","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[{"name":"","type":"address"}],"name":"balances","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"message","type":"string"},{"name":"secret","type":"uint256"}],"name":"create","outputs":[],"payable":true,"stateMutability":"payable","type":"function"},{"constant":true,"inputs":[{"name":"","type":"address"}],"name":"messages","outputs":[{"name":"","type":"string"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"name":"addr","type":"address"},{"name":"pass","type":"uint256"}],"name":"getSecret","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"}];
+var bytecode = '608060405234801561001057600080fd5b506108a7806100206000396000f30060806040526004361061006d576000357c0100000000000000000000000000000000000000000000000000000000900463ffffffff1680630a0e5c9d1461007257806327e235e3146100bf57806346f81a87146101165780635fdd59f81461017c578063f6dd893014610238575b600080fd5b34801561007e57600080fd5b506100bd600480360381019080803573ffffffffffffffffffffffffffffffffffffffff16906020019092919080359060200190929190505050610299565b005b3480156100cb57600080fd5b50610100600480360381019080803573ffffffffffffffffffffffffffffffffffffffff169060200190929190505050610553565b6040518082815260200191505060405180910390f35b61017a600480360381019080803590602001908201803590602001908080601f01602080910402602001604051908101604052809392919081815260200183838082843782019150505050505091929192908035906020019092919050505061056b565b005b34801561018857600080fd5b506101bd600480360381019080803573ffffffffffffffffffffffffffffffffffffffff169060200190929190505050610653565b6040518080602001828103825283818151815260200191508051906020019080838360005b838110156101fd5780820151818401526020810190506101e2565b50505050905090810190601f16801561022a5780820380516001836020036101000a031916815260200191505b509250505060405180910390f35b34801561024457600080fd5b50610283600480360381019080803573ffffffffffffffffffffffffffffffffffffffff16906020019092919080359060200190929190505050610703565b6040518082815260200191505060405180910390f35b6000600160008473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff168152602001908152602001600020548383604051602001808373ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff166c01000000000000000000000000028152601401828152602001925050506040516020818303038152906040526040518082805190602001908083835b602083101515610373578051825260208201915060208101905060208303925061034e565b6001836020036101000a03801982511681845116808217855250505050505090500191505060405180910390206001900414156104e057600260008473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff1681526020019081526020016000205490506000600260008573ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff1681526020019081526020016000208190555060206040519081016040528060008152506000808573ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200190815260200160002090805190602001906104939291906107d6565b503373ffffffffffffffffffffffffffffffffffffffff166108fc829081150290604051600060405180830381858888f193505050501580156104da573d6000803e3d6000fd5b5061054e565b6040517f08c379a00000000000000000000000000000000000000000000000000000000081526004018080602001828103825260068152602001807f4661696c6564000000000000000000000000000000000000000000000000000081525060200191505060405180910390fd5b505050565b60026020528060005260406000206000915090505481565b816000803373ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200190815260200160002090805190602001906105bd9291906107d6565b5034600260003373ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff1681526020019081526020016000206000828254019250508190555080600160003373ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff168152602001908152602001600020819055505050565b60006020528060005260406000206000915090508054600181600116156101000203166002900480601f0160208091040260200160405190810160405280929190818152602001828054600181600116156101000203166002900480156106fb5780601f106106d0576101008083540402835291602001916106fb565b820191906000526020600020905b8154815290600101906020018083116106de57829003601f168201915b505050505081565b60008282604051602001808373ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff166c01000000000000000000000000028152601401828152602001925050506040516020818303038152906040526040518082805190602001908083835b60208310151561079d5780518252602082019150602081019050602083039250610778565b6001836020036101000a038019825116818451168082178552505050505050905001915050604051809103902060019004905092915050565b828054600181600116156101000203166002900490600052602060002090601f016020900481019282601f1061081757805160ff1916838001178555610845565b82800160010185558215610845579182015b82811115610844578251825591602001919060010190610829565b5b5090506108529190610856565b5090565b61087891905b8082111561087457600081600090555060010161085c565b5090565b905600a165627a7a72305820c13aec22d17ecbba02a0f1cdf3f26a5e34c1c0e19efea2e18961498c3070f4cc0029';
+var cAddr = '0x647a6fbd7da2ca606bb52e4fc51624e4427720a9';
+/* Don't modify */
+
+var instance = null;
+window.addEventListener('web3Ready', function() {
+  var contract = web3.ss.contract(abi);
+  instance = contract.at(cAddr);
+  reload();
+});
+
+function getMessage() {
+  let addr
+  if (addr = $('#addr').val()) {
+    instance.messages(addr, function (e, r) {
+        $("#message").html(r);
+    });
+  }
+}
+
+function reload() {
+    let fromAddr = location.search.match(/[?&]fromAddr=([^&]+)/);
+    let pass = location.search.match(/[?&]pass=([^&]+)/);
+    if (fromAddr) {
+      $('#addr').val(fromAddr[1]);
+      getMessage()
+    }
+    if (pass) $('#pass').val(pass[1]);
+
+    $('#message').on('change', getMessage)
+}
+
+$("#create-btn").click(function() {
+    if (!$("#value").val().trim() || $('#value').val() < 0) {
+      alert("Value should larger than zero");
+      return false;
+    }
+    web3.ss.getAccounts(function (e, address) {
+        if (!e) {
+            $("#create-btn").css("display", "none");
+            instance.create($("#message_").val(), instance.getSecret(address[0], $('#pass_').val()), {
+                value: $("#value").val(),
+                gas: 499000,
+                gasPrice: 1
+            }, function (ee, r) {
+                if (ee) {
+                    window.alert("Create failed.");
+                }
+            });
+            setTimeout(function () {
+                reload ();
+            }, 10 * 1000);
+        }
+    });
+    return false;
+});
+
+$("#open-btn").click(function() {
+    if (!$("#addr").val().trim() || $('#pass').val() < 0) {
+      alert("Address and pass are required");
+      return false;
+    }
+
+    $("#open-btn").css("display", "none");
+    instance.open($("#addr").val(), $('#pass').val(), {
+        gas: 499000,
+        gasPrice: 1
+    }, function (ee, r) {
+        if (ee) {
+            window.alert("Open failed.");
+        }
+    });
+    setTimeout(function () {
+        reload ();
+    }, 10 * 1000);
+    return false;
+});
+
+    </script>
+  </body>
+</html>
