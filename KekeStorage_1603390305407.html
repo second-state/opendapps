@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>KekeStorage</title>
+    
+    <style type="text/css">
+    button {
+  background-color: #000;
+  color: #fff;
+  border: 0;
+  font-size: 1em;
+}
+
+    </style>
+  </head>
+  <body>
+    <button id="s">Set Data</button>
+<button id="g">Get Data</button>
+
+
+    <script type="text/javascript">
+    window.BuidlProviders = {
+      web3: {
+        url: "https://rpc.oasiseth.org:8545",
+        chainId: "69",
+        gasPrice: "1",
+        gasLimit: "8000000",
+      },
+      es: {
+        url: "https://devchain.ss.search.secondstate.io"
+      }
+    }
+    </script>
+    <script type="text/javascript" src="https://buidl.secondstate.io/embed/main.js"></script>
+    
+    <script type="text/javascript">
+    /* Don't modify */
+var abi = [{"constant":false,"inputs":[{"name":"x","type":"uint256"}],"name":"set","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"get","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"}];
+var bytecode = '6060604052341561000f57600080fd5b6101558061001e6000396000f30060606040526004361061004c576000357c0100000000000000000000000000000000000000000000000000000000900463ffffffff16806360fe47b1146100515780636d4ce63c14610074575b600080fd5b341561005c57600080fd5b610072600480803590602001909190505061009d565b005b341561007f57600080fd5b6100876100e3565b6040518082815260200191505060405180910390f35b806000803373ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff1681526020019081526020016000208190555050565b60008060003373ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff168152602001908152602001600020549050905600a165627a7a723058202112fad78c5f1225d11676faa973a548d6b19b476f1f1f2d31b57d48aa852fff0029';
+var cAddr = '0x4891806ddfa377f7ccfe8ecbd1e4df67587dfdde';
+/* Don't modify */
+
+var instance = null;
+window.addEventListener('web3Ready', function() {
+  var contract = web3.ss.contract(abi);
+  instance = contract.at(cAddr);
+});
+
+document.querySelector("#s").addEventListener("click", function() {
+  var n = window.prompt("Enter the number:");
+  n && instance.set(n);
+});
+document.querySelector("#g").addEventListener("click", function() {
+  instance.get(function(e,d) {
+    console.log(d.toString());
+    alert(d.toString());
+  });
+});
+
+    </script>
+  </body>
+</html>
