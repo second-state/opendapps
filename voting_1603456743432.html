@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>voting</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" />
+    <style type="text/css">
+    
+    </style>
+  </head>
+  <body>
+    <!DOCTYPE html>
+<html>
+<head>
+ <title>DApp</title>
+ <link href='https://fonts.googleapis.com/css?family=Open Sans:400,700' rel='stylesheet' type='text/css'>
+ <link href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css' rel='stylesheet' type='text/css'>
+</head>
+<body class="container">
+ <h1>Voting Application</h1>
+ <div class="table-responsive">
+  <table class="table table-bordered">
+   <thead>
+    <tr>
+     <th>Candidate</th>
+     <th>Votes</th>
+    </tr>
+   </thead>
+   <tbody>
+    <tr>
+     <td>James</td>
+     <td id="candidate-1"></td>
+    </tr>
+    <tr>
+     <td>Norah</td>
+     <td id="candidate-2"></td>
+    </tr>
+    <tr>
+     <td>Jones</td>
+     <td id="candidate-3"></td>
+    </tr>
+   </tbody>
+  </table>
+ </div>
+ <input type="text" id="candidate" />
+ <a href="#" onclick="voteForCandidate()" class="btn btn-primary">Vote</a>
+</body>
+<script src="https://cdn.rawgit.com/ethereum/web3.js/develop/dist/web3.js"></script>
+<script src="https://code.jquery.com/jquery-3.1.1.slim.min.js"></script>
+<script src="./index.js"></script>
+</html>
+
+    <script type="text/javascript">
+    window.BuidlProviders = {
+      web3: {
+        url: "MetaMask",
+        chainId: "0",
+        gasPrice: "0",
+        gasLimit: "8192000000",
+      },
+      es: {
+        url: "https://devchain.ss.search.secondstate.io"
+      }
+    }
+    </script>
+    <script type="text/javascript" src="https://buidl.secondstate.io/embed/main.js"></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script type="text/javascript">
+    web3 = new Web3(new Web3.providers.HttpProvider("https://rpc.oasiseth.org:8545"));
+abi = JSON.parse('[{"constant":false,"inputs":[{"name":"candidate","type":"bytes32"}],"name":"totalVotesFor","outputs":[{"name":"","type":"uint8"}],"payable":false,"type":"function"},{"constant":false,"inputs":[{"name":"candidate","type":"bytes32"}],"name":"validCandidate","outputs":[{"name":"","type":"bool"}],"payable":false,"type":"function"},{"constant":true,"inputs":[{"name":"","type":"bytes32"}],"name":"votesReceived","outputs":[{"name":"","type":"uint8"}],"payable":false,"type":"function"},{"constant":true,"inputs":[{"name":"x","type":"bytes32"}],"name":"bytes32ToString","outputs":[{"name":"","type":"string"}],"payable":false,"type":"function"},{"constant":true,"inputs":[{"name":"","type":"uint256"}],"name":"candidateList","outputs":[{"name":"","type":"bytes32"}],"payable":false,"type":"function"},{"constant":false,"inputs":[{"name":"candidate","type":"bytes32"}],"name":"voteForCandidate","outputs":[],"payable":false,"type":"function"},{"constant":true,"inputs":[],"name":"contractOwner","outputs":[{"name":"","type":"address"}],"payable":false,"type":"function"},{"inputs":[{"name":"candidateNames","type":"bytes32[]"}],"payable":false,"type":"constructor"}]')
+VotingContract = web3.eth.contract(abi);
+contractInstance = VotingContract.at('0xab906387b47d004e7153e7e04dbf2f6a0b9a20be');
+candidates = {"James": "candidate-1", "Norah": "candidate-2", "Jones": "candidate-3"}
+
+function voteForCandidate(candidate) {
+ candidateName = $("#candidate").val();
+ try {
+  contractInstance.voteForCandidate(candidateName, {from: web3.eth.accounts[0]}, function() {
+   let div_id = candidates[candidateName];
+   $("#"+div_id).html(contractInstance.totalVotesFor.call(candidateName).toString());
+  });
+ } catch (err) {
+ }
+}
+
+$(document).ready(function() {
+ candidateNames = Object.keys(candidates);
+ for (var i = 0; i < candidateNames.length; i++) {
+  let name = candidateNames[i];
+  let val = contractInstance.totalVotesFor.call(name).toString()
+  $("#"+candidates[name]).html(val);
+ }
+});
+    </script>
+  </body>
+</html>
