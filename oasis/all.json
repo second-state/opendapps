@@ -14,8 +14,36 @@
     }
   },
   "tweet": {
-    "title": "Hackathon: OasisTweet",
-    "intro": "Publish your thoughts. Censorship resistant and no spam! People must pay YOU to leave comments on your post. See details http://oasiseth.org/hack",
+    "title": "OasisTweet",
+    "intro": "Publish your thoughts. Censorship resistant and no spam! People must pay YOU to leave comments on your post.",
+    "resources": {
+      "css": ["https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"],
+      "js": ["https://code.jquery.com/jquery-3.4.1.min.js"]
+    },
+    "files": {
+      "lity": "demo.sol",
+      "html": "demo.html",
+      "css": "",
+      "js": "demo.js"
+    }
+  },
+  "erc20": {
+    "title": "ERC-20 tokens",
+    "intro": "Publish ERC-20 tokens and trade them on the on-chain Uniswap exchange!",
+    "resources": {
+      "css": [],
+      "js": []
+    },
+    "files": {
+      "lity": "demo.sol",
+      "html": "demo.html",
+      "css": "",
+      "js": "demo.js"
+    }
+  },
+  "tweet-0.5": {
+    "title": "OasisTweet for Solidity 0.5+",
+    "intro": "The same as the OasisTweet above but for Solidity 0.5.0+ compilers",
     "resources": {
       "css": ["https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"],
       "js": ["https://code.jquery.com/jquery-3.4.1.min.js"]
