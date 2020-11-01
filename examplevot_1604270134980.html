@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>examplevot</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" />
+    <style type="text/css">
+    button {
+  background-color: #000;
+  color: #fff;
+  border: 0;
+  font-size: 1em;
+}
+    </style>
+  </head>
+  <body>
+    <div class="container">
+   <br/>
+   <div class="jumbotron">
+      <p class="lead" id="greeting"></p>
+      <div id="imageDiv" style="display:none">
+         <img id="image" src="" class="img-fluid img-thumbnail"/>
+      </div>
+      <hr/>
+      <p id="votes" style="display:none">
+         <span id="ups"></span> voted 👍 |
+         <span id="downs"></span> voted 👎
+      </p>
+      <form id="form" class="form-inline" style="display:none">
+         <button id="voteUp" type="button" onclick="return vote(1);" class="btn btn-secondary mb-2">👍</button>
+         <button id="voteDown" type="button" onclick="return vote(-1);" class="btn btn-secondary mb-2">👎</button>
+      </form>
+      <div id="formSubmitted" style="display:none">Please wait 2 seconds ...</div>
+      <div id="myVoteUp" style="display:none">You have already voted 👍</div>
+      <div id="myVoteDown" style="display:none">You have already voted 👎</div>
+   </div>
+</div>
+
+    <script type="text/javascript">
+    window.BuidlProviders = {
+      web3: {
+        url: "https://devchain.secondstate.io:8545",
+        chainId: "27183",
+        gasPrice: "0",
+        gasLimit: "8192000000",
+      },
+      es: {
+        url: "https://devchain.ss.search.secondstate.io"
+      }
+    }
+    </script>
+    <script type="text/javascript" src="https://buidl.secondstate.io/embed/main.js"></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script type="text/javascript">
+    var instance = null;
+window.addEventListener('web3Ready', function() {
+  var contract = web3.ss.contract(abi);
+  instance = contract.at(cAddr);
+  reload();
+});
+
+function reload() {
+    instance.greeting(function (e, r) {
+        $("#greeting").html(r);
+    });
+    instance.photoUrl(function (e, r) {
+        if (!e && r) {
+            $("#imageDiv").css("display", "block");
+            $("#image").attr("src", r);
+        }
+    });
+    instance.getVotes(function (e, r) {
+        if (!e && (r[0] > 0 || r[1] > 0)) {
+            $("#votes").css("display", "block");
+            $("#ups").text(r[0]);
+            $("#downs").text(r[1]);
+        }
+    });
+
+    $("#form").css("display", "none");
+    $("#formSubmitted").css("display", "none");
+    web3.ss.getAccounts(function (e, address) {
+        if (!e) {
+            instance.getVote(address, function (ee, r) {
+                if (r == 1) {
+                    $("#myVoteUp").css("display", "block");
+                } else if (r == -1) {
+                    $("#myVoteDown").css("display", "block");
+                } else {
+                    $("#form").css("display", "block");
+                }
+            });
+        }
+    });
+}
+
+function vote (choice) {
+    web3.ss.getAccounts(function (e, address) {
+        if (!e) {
+            $("#form").css("display", "none");
+            $("#formSubmitted").css("display", "block");
+            instance.vote(choice, function (ee, result) {
+                if (ee) {
+                    window.alert("Failed for " + address);
+                }
+            });
+            setTimeout(function () {
+                reload ();
+            }, 2 * 1000);
+        }
+    });
+    return false;
+}
+    </script>
+  </body>
+</html>
