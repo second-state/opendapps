@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>afgasfs</title>
+    
+    <style type="text/css">
+    button {
+  background-color: #000;
+  color: #fff;
+  border: 0;
+  font-size: 1em;
+}
+
+    </style>
+  </head>
+  <body>
+    
+<div class="container">
+    <div class="row">
+    <div class="col-xs-12 col-sm-8 col-sm-push-2">
+        <h1 class="text-center">Pete's Pet Shop</h1>
+        <hr/>
+        <br/>
+    </div>
+    </div>
+
+    <div id="petsRow" class="row">
+    <!-- PETS LOAD HERE -->
+    </div>
+</div>
+
+<div id="petTemplate" style="display: none;">
+    <div class="col-sm-6 col-md-4 col-lg-3">
+    <div class="panel panel-default panel-pet">
+        <div class="panel-heading">
+        <h3 class="panel-title">Scrappy</h3>
+        </div>
+        <div class="panel-body">
+        <img alt="140x140" data-src="holder.js/140x140" class="img-rounded img-center" style="width: 100%;" src="https://animalso.com/wp-content/uploads/2017/01/Golden-Retriever_6.jpg" data-holder-rendered="true">
+        <br/><br/>
+        <strong>Breed</strong>: <span class="pet-breed">Golden Retriever</span><br/>
+        <strong>Age</strong>: <span class="pet-age">3</span><br/>
+        <strong>Location</strong>: <span class="pet-location">Warren, MI</span><br/><br/>
+        <button class="btn btn-default btn-adopt" type="button" data-id="0">Adopt</button>
+        </div>
+    </div>
+    </div>
+</div>
+
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+<script src="js/truffle-contract.js"></script>
+
+
+    <script type="text/javascript">
+    window.BuidlProviders = {
+      web3: {
+        url: "MetaMask",
+        chainId: "0",
+        gasPrice: "0",
+        gasLimit: "8192000000",
+      },
+      es: {
+        url: "https://devchain.ss.search.secondstate.io"
+      }
+    }
+    </script>
+    <script type="text/javascript" src="https://buidl.secondstate.io/embed/main.js"></script>
+    
+    <script type="text/javascript">
+    /* Don't modify */
+var abi = [{"constant":false,"inputs":[{"internalType":"uint256","name":"landId","type":"uint256"}],"name":"buy","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"getOwners","outputs":[{"internalType":"address[16]","name":"","type":"address[16]"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"internalType":"uint256","name":"landId","type":"uint256"}],"name":"ownerOf","outputs":[{"internalType":"address","name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"internalType":"uint256","name":"","type":"uint256"}],"name":"owners","outputs":[{"internalType":"address","name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"}];
+var bytecode = '608060405234801561001057600080fd5b50610369806100206000396000f3fe608060405234801561001057600080fd5b506004361061004c5760003560e01c8063025e7c27146100515780636352211e146100bf578063a0e67e2b1461012d578063d96a094a14610173575b600080fd5b61007d6004803603602081101561006757600080fd5b81019080803590602001909291905050506101b5565b604051808273ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200191505060405180910390f35b6100eb600480360360208110156100d557600080fd5b81019080803590602001909291905050506101e8565b604051808273ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200191505060405180910390f35b61013561021f565b6040518082601060200280838360005b83811015610160578082015181840152602081019050610145565b5050505090500191505060405180910390f35b61019f6004803603602081101561018957600080fd5b81019080803590602001909291905050506102a0565b6040518082815260200191505060405180910390f35b600081601081106101c257fe5b016000915054906101000a900473ffffffffffffffffffffffffffffffffffffffff1681565b60008082601081106101f657fe5b0160009054906101000a900473ffffffffffffffffffffffffffffffffffffffff169050919050565b610227610311565b6000601080602002604051908101604052809291908260108015610296576020028201915b8160009054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff168152602001906001019080831161024c575b5050505050905090565b60008082101580156102b35750600f8211155b6102bc57600080fd5b33600083601081106102ca57fe5b0160006101000a81548173ffffffffffffffffffffffffffffffffffffffff021916908373ffffffffffffffffffffffffffffffffffffffff160217905550819050919050565b60405180610200016040528060109060208202803883398082019150509050509056fea265627a7a72315820f55402bf9bf4d97bc670117531653d6ffb736c6052db9012b0356c8c238180bc64736f6c63430005110032';
+var cAddr = '0x7841e7d4cab68cde5e80c2c0884993c563dffd1f';
+/* Don't modify */
+
+
+
+var instance = null;
+window.addEventListener('web3Ready', function() {
+  var contract = web3.ss.contract(abi);
+  instance = contract.at(cAddr);
+  loadPets();
+});
+
+function loadPets() {
+  var pets = [{"id":0,"name":"Frieda","picture":"images/scottish-terrier.jpeg","age":3,"breed":"Scottish Terrier","location":"Lisco, Alabama"},{"id":1,"name":"Gina","picture":"images/scottish-terrier.jpeg","age":3,"breed":"Scottish Terrier","location":"Tooleville, West Virginia"},{"id":2,"name":"Collins","picture":"images/french-bulldog.jpeg","age":2,"breed":"French Bulldog","location":"Freeburn, Idaho"},{"id":3,"name":"Melissa","picture":"images/boxer.jpeg","age":2,"breed":"Boxer","location":"Camas, Pennsylvania"},{"id":4,"name":"Jeanine","picture":"images/french-bulldog.jpeg","age":2,"breed":"French Bulldog","location":"Gerber, South Dakota"},{"id":5,"name":"Elvia","picture":"images/french-bulldog.jpeg","age":3,"breed":"French Bulldog","location":"Innsbrook, Illinois"},{"id":6,"name":"Latisha","picture":"images/golden-retriever.jpeg","age":3,"breed":"Golden Retriever","location":"Soudan, Louisiana"},{"id":7,"name":"Coleman","picture":"images/golden-retriever.jpeg","age":3,"breed":"Golden Retriever","location":"Jacksonwald, Palau"},{"id":8,"name":"Nichole","picture":"images/french-bulldog.jpeg","age":2,"breed":"French Bulldog","location":"Honolulu, Hawaii"},{"id":9,"name":"Fran","picture":"images/boxer.jpeg","age":3,"breed":"Boxer","location":"Matheny, Utah"},{"id":10,"name":"Leonor","picture":"images/boxer.jpeg","age":2,"breed":"Boxer","location":"Tyhee, Indiana"},{"id":11,"name":"Dean","picture":"images/scottish-terrier.jpeg","age":3,"breed":"Scottish Terrier","location":"Windsor, Montana"},{"id":12,"name":"Stevenson","picture":"images/french-bulldog.jpeg","age":3,"breed":"French Bulldog","location":"Kingstowne, Nevada"},{"id":13,"name":"Kristina","picture":"images/golden-retriever.jpeg","age":4,"breed":"Golden Retriever","location":"Sultana, Massachusetts"},{"id":14,"name":"Ethel","picture":"images/golden-retriever.jpeg","age":2,"breed":"Golden Retriever","location":"Broadlands, Oregon"},{"id":15,"name":"Terry","picture":"images/golden-retriever.jpeg","age":2,"breed":"Golden Retriever","location":"Dawn, Wisconsin"}]
+
+  var petsRow = $('#petsRow');
+  var petTemplate = $('#petTemplate');
+
+  for (i = 0; i < data.length; i ++) {
+    petTemplate.find('.panel-title').text(data[i].name);
+    petTemplate.find('img').attr('src', data[i].picture);
+    petTemplate.find('.pet-breed').text(data[i].breed);
+    petTemplate.find('.pet-age').text(data[i].age);
+    petTemplate.find('.pet-location').text(data[i].location);
+    petTemplate.find('.btn-adopt').attr('data-id', data[i].id);
+
+    petsRow.append(petTemplate.html());
+  }
+}
+
+document.querySelector("#s").addEventListener("click", function() {
+  var n = window.prompt("Enter the number:");
+  n && instance.set(n);
+});
+document.querySelector("#g").addEventListener("click", function() {
+  instance.get(function(e,d) {
+    console.log(d.toString());
+    alert(d.toString());
+  });
+});
+
+    </script>
+  </body>
+</html>
