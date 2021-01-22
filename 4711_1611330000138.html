@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>4711</title>
+    
+    <style type="text/css">
+    
+    </style>
+  </head>
+  <body>
+    <html>
+  <body>
+  <h2>Hello World</h2>
+    <form method=GET>
+      New message:<br/><br/>
+      <input type="text" size="40" name="new_mesg"/><br/><br/>
+      <input type="submit"/>
+      <p id="status"/>
+    </form>
+    <p>The current message is: <span id="mesg"/></p> 
+  </body>
+</html>
+
+
+    <script type="text/javascript">
+    window.BuidlProviders = {
+      web3: {
+        url: "https://rpc.cybermiles.io:8545",
+        chainId: "18",
+        gasPrice: "5000000000",
+        gasLimit: "8000000",
+      },
+      es: {
+        url: "https://cmt.search.secondstate.io"
+      }
+    }
+    </script>
+    <script type="text/javascript" src="https://buidl.secondstate.io/embed/main.js"></script>
+    
+    <script type="text/javascript">
+    /* Don't modify */
+var abi = [];
+var bytecode = '';
+var cAddr = '';
+/* Don't modify */
+
+var instance = null;
+window.addEventListener('web3Ready', function() {
+  var contract = web3.ss.contract(abi);
+  instance = contract.at(cAddr);
+
+  var new_mesg = location.search.split('new_mesg=')[1];
+    if (new_mesg === undefined || new_mesg == null) {
+    } else {
+      web3.ss.getAccounts(function (e, address) {
+        new_mesg = decodeURIComponent(new_mesg.replace(/\+/g, '%20'));
+        instance.updateMessage(new_mesg, {from: address}, function(error, result){
+          if(!error)
+            document.getElementById("status").innerHTML = 
+              "<b>Submitted to blockchain</b>. " + 
+              "The new message might take a few seconds to show up! <a href=''>Refresh page</a>";
+        });
+      });
+    }
+ 
+    instance.sayHello(function(error, result){
+      if(!error)
+        document.getElementById("mesg").innerHTML = result;
+    });
+
+});
+
+    </script>
+  </body>
+</html>
