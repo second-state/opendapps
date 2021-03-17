@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>texgeek3</title>
+    
+    <style type="text/css">
+    html,
+body {
+  height: 100%;
+}
+
+body {
+  background: black;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.container {
+  /*
+  set max-width and max-height to canvas 
+  width/height respectively
+  */
+  max-width: 640px;
+  max-height: 480px;
+  width: 100%;
+  height: 100%;
+}
+
+canvas {
+  outline: 1px solid white;
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+}
+    </style>
+  </head>
+  <body>
+    
+
+<div class="container">
+  <canvas id="c" width="640" height="480" style="background:#000"></canvas>
+</div>
+
+    <script type="text/javascript">
+    window.BuidlProviders = {
+      web3: {
+        url: "https://rpc.oasiseth.org:8545",
+        chainId: "69",
+        gasPrice: "1",
+        gasLimit: "8000000",
+      },
+      es: {
+        url: "https://devchain.ss.search.secondstate.io"
+      }
+    }
+    </script>
+    <script type="text/javascript" src="https://buidl.secondstate.io/embed/main.js"></script>
+    
+    <script type="text/javascript">
+    /* Don't modify */
+var abi = [{"constant":false,"inputs":[{"name":"x","type":"uint256"}],"name":"set","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"get","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"}];
+var bytecode = '608060405234801561001057600080fd5b5060df8061001f6000396000f3006080604052600436106049576000357c0100000000000000000000000000000000000000000000000000000000900463ffffffff16806360fe47b114604e5780636d4ce63c146078575b600080fd5b348015605957600080fd5b5060766004803603810190808035906020019092919050505060a0565b005b348015608357600080fd5b50608a60aa565b6040518082815260200191505060405180910390f35b8060008190555050565b600080549050905600a165627a7a72305820c25af45c42c01588809d8cd09c19adf172a81cde693d4c7ac17859b447f9ca6c0029';
+var cAddr = '0x2995d54154ed0f594bc820ffcd4805a171c2c0ef';
+/* Don't modify */
+
+var instance = null;
+window.addEventListener('web3Ready', function() {
+  var contract = web3.ss.contract(abi);
+  instance = contract.at(cAddr);
+});
+
+// esss.shaAbi(JSON.stringify(abi)).then((shaResult) => {
+//   var sha = JSON.parse(shaResult).abiSha3;
+//   esss.searchUsingAbi(sha).then((searchResult) => {
+//     console.log(searchResult);
+//   });
+// });
+
+document.querySelector("#s").addEventListener("click", function() {
+  var n = window.prompt("Enter the number:");
+  n && instance.set(n);
+});
+document.querySelector("#g").addEventListener("click", function() {
+  instance.get(function(e,d) {
+    console.log(d.toString());
+    alert(d.toString());
+  });
+});
+
+c=document.getElementById('c').getContext('2d')
+c.fillStyle="#FFF"
+c.font="60px monospace"
+w=s=1
+p=q=a=b=0
+m=n=190
+x=300;y=235
+u=-5;v=3
+setInterval(function(){if(w&&!s)return;s=0
+c.clearRect(0,0,640,480)
+for(i=5;i<480;i+=20)c.fillRect(318,i,4,10)
+m+=p;n+=q
+m=m<0?0:m;m=m>380?380:m
+n=n<0?0:n;n=n>380?380:n
+x+=u;y+=v
+if(y<=0){y=0;v=-v}
+if(y>=470){y=470;v=-v}
+if(x<=40&&x>=20&&y<m+110&&y>m-10){u=-u+0.2;v+=(y-m-45)/20}
+if(x<=610&&x>=590&&y<n+110&&y>n-10){u=-u-0.2;v+=(y-n-45)/20}
+if(x<-10){b++;x=360;y=235;u=5;w=1}
+if(x>640){a++;x=280;y=235;u=-5;w=1}
+c.fillText(a+" "+b,266,60)
+c.fillRect(20,m,20,100)
+c.fillRect(600,n,20,100)
+c.fillRect(x,y,10,10)},30)
+document.onkeydown=function(e){k=(e||window.event).keyCode;w=w?0:k=='27'?1:0;p=k=='65'?5:k=='81'?-5:p;q=k=='40'?5:k=='38'?-5:q;}
+document.onkeyup=function(e){k=(e||window.event).keyCode;p=k=='65'||k=='81'?0:p;q=k=='38'||k=='40'?0:q}
+
+
+/* Variable index:
+a -> left player score
+b -> right player score
+c -> context
+e -> event
+i -> counter for dashed line
+k -> keycode
+m -> left paddle y
+n -> right paddle y
+p -> left paddle y velocity
+q -> right paddle y velocity
+s -> is start of game
+u -> ball x velocity
+v -> ball y velocity
+w -> game is waiting (paused)
+x -> ball x
+y -> ball y
+*/
+
+    </script>
+  </body>
+</html>
