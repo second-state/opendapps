@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>ARYOUOKtest</title>
+    
+    <style type="text/css">
+    button {
+  background-color: #000;
+  color: #fff;
+  border: 0;
+  font-size: 1em;
+}
+
+    </style>
+  </head>
+  <body>
+    <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>User Dapp</title>
+
+    <script src="./node_modules/web3/dist/web3.min.js"></script>
+    <style>
+    body {
+    background-color:#F0F0F0;
+    padding: 2em;
+    font-family: 'Raleway','Source Sans Pro', 'Arial';
+}
+.container {
+    width: 50%;
+    margin: 0 auto;
+}
+label {
+    display:block;
+    margin-bottom:10px;
+}
+input {
+    padding:10px;
+    width: 50%;
+    margin-bottom: 1em;
+}
+button {
+    margin: 2em 0;
+    padding: 1em 4em;
+    display:block;
+}
+
+#instructor {
+    padding:1em;
+    background-color:#fff;
+    margin: 1em 0;
+}
+    </style>
+
+</head>
+<body>
+    <div class="container">
+
+        <h2>Get User info</h2>
+
+        
+        <p>
+            <span>Name: </span><b class="name"></b><br/>
+            Email: <b class="email"></b><br/>
+            Age: <b class="age"></b>
+        </p>
+        <input type="button" id="button" class="get_user_info" value="Get User Info">
+
+        <hr/>
+        <h2>Update User info</h2>
+
+        <label for="name" class="col-lg-2 control-label">Name</label>
+        <input class="set_name" type="text">
+
+        <label for="name" class="col-lg-2 control-label">Email</label>
+        <input class="set_email" type="text">
+
+        <label for="name" class="col-lg-2 control-label">Age</label>
+        <input class="set_age" type="text">
+
+        <p class="note"></p>
+
+        <input type="button" id="button" class="update_user_info" value="Update User Info">
+
+
+
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+
+    <script>
+       // Our future code here..
+        
+        var abi = [
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "_name",
+				"type": "string"
+			},
+			{
+				"name": "_email",
+				"type": "string"
+			},
+			{
+				"name": "_age",
+				"type": "uint256"
+			}
+		],
+		"name": "setUser",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [],
+		"name": "getUser",
+		"outputs": [
+			{
+				"name": "",
+				"type": "string"
+			},
+			{
+				"name": "",
+				"type": "string"
+			},
+			{
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	}
+]
+
+        var contract_address = '0xa8fcb98b50ac9468b1184573f1cca96da1ce4db9';
+        var web3;
+
+       window.addEventListener('load', async () => {
+    // Modern dapp browsers...
+    if (window.ethereum) {
+        window.web3 = new Web3(ethereum);
+        try {
+            // Request account access if needed
+            await ethereum.enable();
+            // Acccounts now exposed
+            // web3.eth.sendTransaction({/* ... */});
+
+            console.log('1111');
+            //call function to connect contract
+            ConnectToContract();
+
+        } catch (error) {
+            // User denied account access...
+        }
+    }
+    // Legacy dapp browsers...
+    else if (window.web3) {
+        window.web3 = new Web3(web3.currentProvider);
+        // Acccounts always exposed
+        // web3.eth.sendTransaction({/* ... */});
+    }
+    // Non-dapp browsers...
+    else {
+        console.log('Non-Ethereum browser detected. You should consider trying MetaMask!');
+    }
+});
+
+function ConnectToContract(){
+    web3.eth.defaultAccount = web3.eth.accounts[0];
+
+    var CoursetroContract = web3.eth.contract(abi);
+
+    var Coursetro = CoursetroContract.at(contract_address);
+    // console.log(Coursetro);
+
+
+    var current_address = '';
+
+    //get address in current account
+    current_address = web3.eth.coinbase;
+
+    $('.my_wallet').html(current_address);
+
+
+
+    $('.get_user_info').click(function(){       
+      
+        Coursetro.getUser((err, val) => {
+            if(!err){
+                $('.name').html(val[0]);
+                $('.email').html(val[1]);
+                $('.age').html(val[2].toString());
+                // console.log(val)
+                //$('.note').html('<a href="https://rinkeby.etherscan.io/tx/'+val+'">Success: Check transaction</a>');
+            }else{
+                console.log(err);
+            }
+        })
+    })
+
+    $('.update_user_info').click(function(){
+        var name = $('.set_name').val();
+        var email = $('.set_email').val();
+        var age = $('.set_age').val();
+
+        console.log(name+email+age)
+        Coursetro.setUser(name, email, age, (err, val)=>{
+            if(!err){
+                $('.note').html('<a href="https://rinkeby.etherscan.io/tx/'+val+'">Success: Check transaction</a>');
+            
+            }else{
+                console.log(err);
+            }
+        })
+    })
+    
+    
+}
+
+
+
+
+
+    </script>
+
+</body>
+</html>
+
+    <script type="text/javascript">
+    window.BuidlProviders = {
+      web3: {
+        url: "https://rpc.oasiseth.org:8545",
+        chainId: "69",
+        gasPrice: "1",
+        gasLimit: "8000000",
+      },
+      es: {
+        url: "https://devchain.ss.search.secondstate.io"
+      }
+    }
+    </script>
+    <script type="text/javascript" src="https://buidl.secondstate.io/embed/main.js"></script>
+    
+    <script type="text/javascript">
+    /* Don't modify */
+var abi = [];
+var bytecode = '';
+var cAddr = '';
+/* Don't modify */
+
+var instance = null;
+window.addEventListener('web3Ready', function() {
+  var contract = web3.ss.contract(abi);
+  instance = contract.at(cAddr);
+});
+
+document.querySelector("#s").addEventListener("click", function() {
+  var n = window.prompt("Enter the number:");
+  n && instance.set(n);
+});
+document.querySelector("#g").addEventListener("click", function() {
+  instance.get(function(e,d) {
+    console.log(d.toString());
+    alert(d.toString());
+  });
+});
+
+    </script>
+  </body>
+</html>
