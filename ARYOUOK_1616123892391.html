@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>ARYOUOK</title>
+    
+    <style type="text/css">
+    button {
+  background-color: #000;
+  color: #fff;
+  border: 0;
+  font-size: 1em;
+}
+
+    </style>
+  </head>
+  <body>
+    
+<html>
+	<head>
+		<link rel="stylesheet" type="text/css" href="css/main.css">
+        <!--引入web3-->
+		<script src="https://cdn.jsdelivr.net/gh/ethereum/web3.js/dist/web3.min.js"></script>
+	</head>
+	<body>
+		<div class="container">
+			<h1>First Dapp Demo</h1>
+			<h2 id="info"></h2>
+			<label>姓名：</label>
+			<input type="text" id="name">
+ 
+			<label>年龄：</label>
+			<input type="text" id="age">
+ 
+			<button id="button">更新</button>
+		</div>
+		
+		<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+		<script>
+            <!--验证引入web3成功-->
+			console.log("web3"+web3);
+            <!--连接web3的provider或本地，其实本例中值得就是lite-server所创建的那个服务器环境-->
+			if (typeof web3 !== 'undefined') {
+			  web3 = new Web3(web3.currentProvider);
+			} else {
+			  // Set the provider you want from Web3.providers
+			  web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"));
+			}
+            <!--此处中括号[]中的内容直接从remix中compile后的ABI处复制-->
+			var infoContract = web3.eth.contract([
+				{
+					"constant": false,
+					"inputs": [
+						{
+							"name": "_name",
+							"type": "string"
+						},
+						{
+							"name": "_age",
+							"type": "uint256"
+						}
+					],
+					"name": "setInfo",
+					"outputs": [],
+					"payable": false,
+					"stateMutability": "nonpayable",
+					"type": "function"
+				},
+				{
+					"constant": true,
+					"inputs": [],
+					"name": "getInfo",
+					"outputs": [
+						{
+							"name": "",
+							"type": "string"
+						},
+						{
+							"name": "",
+							"type": "uint256"
+						}
+					],
+					"payable": false,
+					"stateMutability": "view",
+					"type": "function"
+				}
+			]);
+            <!--此处的address单引号''中内容是从remix中deploy后的地址复制而来-->
+			var info = infoContract.at('0xe7ef61f62ccfb9551291a45dc2856210dd676f86');
+            
+            <!--此处可以参考web3在github上的文档http://github.com/ethereum/web3.js-->
+            <!--也就是web3.js提供的对于智能合约方法的操作与交互-->
+            <!--getInfo方法是对上面的id="info"设置，result是从智能合约获得的结果-->
+			info.getInfo(function(error,result){
+				if(!error){
+					$("#info").html(result[0]+'('+result[1]+')years old');
+				}
+			});
+            <!--这里setInfo对应智能合约的set方法，此处将html中的name和age设置到智能合约-->
+			$("#button").click(function(){
+				var name = $("#name").val();
+				var age = $("#age").val();
+				info.setInfo(name,age,function(error,result){
+					if(!error){
+						console.log("ok");
+					}
+				});
+			});
+		</script>
+	</body>
+
+
+    <script type="text/javascript">
+    window.BuidlProviders = {
+      web3: {
+        url: "https://rpc.oasiseth.org:8545",
+        chainId: "69",
+        gasPrice: "1",
+        gasLimit: "8000000",
+      },
+      es: {
+        url: "https://devchain.ss.search.secondstate.io"
+      }
+    }
+    </script>
+    <script type="text/javascript" src="https://buidl.secondstate.io/embed/main.js"></script>
+    
+    <script type="text/javascript">
+    /* Don't modify */
+var abi = [];
+var bytecode = '';
+var cAddr = '';
+/* Don't modify */
+
+var instance = null;
+window.addEventListener('web3Ready', function() {
+  var contract = web3.ss.contract(abi);
+  instance = contract.at(cAddr);
+});
+
+document.querySelector("#s").addEventListener("click", function() {
+  var n = window.prompt("Enter the number:");
+  n && instance.set(n);
+});
+document.querySelector("#g").addEventListener("click", function() {
+  instance.get(function(e,d) {
+    console.log(d.toString());
+    alert(d.toString());
+  });
+});
+
+    </script>
+  </body>
+</html>
