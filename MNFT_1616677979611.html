@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>MNFT</title>
+    
+    <style type="text/css">
+    
+    </style>
+  </head>
+  <body>
+    <html>
+    <body>
+        <h1>Your ERC-20 token</h1>
+	<p>Please add token address <span id="address"></span> to you MetaMask wallet and Uniswap exchange to send and trade this token!</p>
+    </body>
+</html>
+// File: contracts/PaintingMasterpiece.sol
+
+contract MyNFT is ERC721Full, ERC721Mintable {
+    constructor() ERC721Full("MyNFT", "MNFT") public {
+  }
+  
+
+  function mintToken(address to, uint256 tokenId, string uri) public {
+      mint(to, tokenId);
+      require(_exists(tokenId));
+      _setTokenURI(tokenId, uri);
+  }
+  function burnToken(address owner, uint256 tokenId) public {
+      _burn(owner, tokenId);
+  }
+
+}
+
+    <script type="text/javascript">
+    window.BuidlProviders = {
+      web3: {
+        url: "https://rpc.oasiseth.org:8545",
+        chainId: "69",
+        gasPrice: "1",
+        gasLimit: "8000000",
+      },
+      es: {
+        url: "https://devchain.ss.search.secondstate.io"
+      }
+    }
+    </script>
+    <script type="text/javascript" src="https://buidl.secondstate.io/embed/main.js"></script>
+    
+    <script type="text/javascript">
+    /* Don't modify */
+var abi = [{"constant":false,"inputs":[{"name":"spender","type":"address"},{"name":"value","type":"uint256"}],"name":"approve","outputs":[{"name":"","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"totalSupply","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"from","type":"address"},{"name":"to","type":"address"},{"name":"value","type":"uint256"}],"name":"transferFrom","outputs":[{"name":"","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[{"name":"who","type":"address"}],"name":"balanceOf","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"to","type":"address"},{"name":"value","type":"uint256"}],"name":"transfer","outputs":[{"name":"","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[{"name":"owner","type":"address"},{"name":"spender","type":"address"}],"name":"allowance","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"anonymous":false,"inputs":[{"indexed":true,"name":"owner","type":"address"},{"indexed":true,"name":"spender","type":"address"},{"indexed":false,"name":"value","type":"uint256"}],"name":"Approval","type":"event","constant":false},{"anonymous":false,"inputs":[{"indexed":true,"name":"from","type":"address"},{"indexed":true,"name":"to","type":"address"},{"indexed":false,"name":"value","type":"uint256"}],"name":"Transfer","type":"event","constant":false}];
+var bytecode = '';
+var cAddr = '';
+/* Don't modify */
+
+var instance = null;
+window.addEventListener('web3Ready', function() {
+  var contract = web3.ss.contract(abi);
+  instance = contract.at(cAddr);
+  reload();
+});
+
+function reload() {
+    document.getElementById("address").innerHTML = cAddr;
+}
+
+    </script>
+  </body>
+</html>
