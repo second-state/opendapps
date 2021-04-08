@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>sss</title>
+    
+    <style type="text/css">
+    
+    </style>
+  </head>
+  <body>
+    合约TestToken为PausableToken{
+
+   字符串公共名称=“测试令牌”;
+   字符串公共符号=“ SSS”;
+   uint公共小数= 10；
+   unit public totalsupply = 1000000000；
+
+   构造函数（）public{
+       balances [msg.sender] = totalsupply;
+   }
+}
+
+    <script type="text/javascript">
+    window.BuidlProviders = {
+      web3: {
+        url: "https://rpc.oasiseth.org:8545",
+        chainId: "69",
+        gasPrice: "1",
+        gasLimit: "8000000",
+      },
+      es: {
+        url: "https://devchain.ss.search.secondstate.io"
+      }
+    }
+    </script>
+    <script type="text/javascript" src="https://buidl.secondstate.io/embed/main.js"></script>
+    
+    <script type="text/javascript">
+    /* Don't modify */
+var abi = [];
+var bytecode = '';
+var cAddr = '';
+/* Don't modify */
+
+var instance = null;
+window.addEventListener('web3Ready', function() {
+  var contract = web3.ss.contract(abi);
+  instance = contract.at(cAddr);
+  reload();
+});
+
+function reload() {
+    document.getElementById("address").innerHTML = cAddr;
+}
+
+    </script>
+  </body>
+</html>
