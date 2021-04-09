@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>teahouse-storage</title>
+    
+    <style type="text/css">
+    button {
+  background-color: #000;
+  color: #fff;
+  border: 0;
+  font-size: 1em;
+}
+
+    </style>
+  </head>
+  <body>
+    <!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    
+    <title>Data Stores</title>
+  </head>
+  <body>
+    <div class="container">
+        <p><br/>The table shows on-chain storage contracts. You can create a new one, or change the number stored in an existing one. All actions are recorded on-chain as immutable history.</p>
+        <p><button id="create" class="btn btn-primary" onclick="create(this)">Create a new storage contract</button></p>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Created</th>
+                    <th scope="col">Data</th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody id="tbody">
+            </tbody>
+        </table>
+    </div>
+  </body>
+</html>
+
+    <script type="text/javascript">
+    window.BuidlProviders = {
+      web3: {
+        url: "https://rpc.oasiseth.org:8545",
+        chainId: "69",
+        gasPrice: "1",
+        gasLimit: "8000000",
+      },
+      es: {
+        url: "https://devchain.ss.search.secondstate.io"
+      }
+    }
+    </script>
+    <script type="text/javascript" src="https://buidl.secondstate.io/embed/main.js"></script>
+    
+    <script type="text/javascript">
+    var contract = window.web3 && web3.ss && web3.ss.contract(abi);
+var instance = contract && contract.at(cAddr);
+window.addEventListener('web3Ready', function() {
+  contract = web3.ss.contract(abi);
+  instance = contract.at(cAddr);
+  reload();
+});
+
+function reload() {
+    document.querySelector("#create").innerHTML = "Create a new storage contract";
+    var tbodyInner = "";
+    esss.shaAbi(JSON.stringify(abi)).then((shaResult) => {
+        var sha = JSON.parse(shaResult).abiSha3;
+        esss.searchUsingAbi(sha).then((searchResult) => {
+            var items = JSON.parse(searchResult);
+            items.sort(compareItem);
+            items.forEach(function(item) {
+                tbodyInner = tbodyInner +
+                    "<tr id='" + item.contractAddress + "'><td>" + item.blockNumber +
+                    "</td><td>" + item.functionData.get +
+                    "</td><td><button class='btn btn-info' onclick='setData(this)'>Set</button></td></tr>";
+            }); // end of JSON iterator
+            document.querySelector("#tbody").innerHTML = tbodyInner;
+        });
+    }); // end of esss
+}
+
+function create(element) {
+    element.innerHTML = "Wait ...";
+    var data = '0x' + contract.new.getData({
+        data: bytecode
+    });
+    contract.new({
+        data: data
+    }, function(ee, i) {
+        if (!ee && i.address != null) {
+            esss.submitAbi(JSON.stringify(abi), i.transactionHash).then((submitResults) => {
+                setTimeout(function() {
+                    reload();
+                }, 3 * 1000);
+            });
+        }
+    });
+}
+
+function setData(element) {
+    var tr = element.closest("tr");
+    instance = contract.at(tr.id);
+    var n = window.prompt("Input a number:");
+    n && instance.set(n);
+    setTimeout(function() {
+        esss.updateStateOfContractAddress(JSON.stringify(abi), instance.address).then((c2i) => {
+            setTimeout(function() {
+                esss.searchUsingAddress(instance.address).then((r) => {
+                    var data = JSON.parse(r);
+                    resultToDisplay = JSON.stringify(data.functionData.get);
+                    element.closest("td").previousSibling.innerHTML = resultToDisplay.replace(/['"]+/g, '');
+                    element.innerHTML = "Set";
+                });
+            }, 1 * 1000);
+        });
+    }, 1 * 1000);
+    element.innerHTML = "Wait ...";
+}
+
+function compareItem(a, b) {
+    let comparison = 0;
+    if (a.blockNumber < b.blockNumber) {
+        comparison = 1;
+    } else if (a.blockNumber > b.blockNumber) {
+        comparison = -1;
+    }
+    return comparison;
+}
+    </script>
+  </body>
+</html>
