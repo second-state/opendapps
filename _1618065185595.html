@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>大鸡巴</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" />
+    <style type="text/css">
+    
+    </style>
+  </head>
+  <body>
+    <div class="container">
+    <br/>
+    <div class="jumbotron">
+        <div class="view overlay rounded-top text-center">
+          <img src="" class="img-fluid" id="image">
+        </div>
+
+        <div class="card-body text-center mb-3">
+          <p class="card-text py-2" id="message"></p>
+        </div>
+
+        <hr/>
+        <form id="form">
+            <div class="form-group">
+                <label for="name">Name</label>
+                <input type="text" class="form-control" id="name" placeholder="">
+            </div>
+            <div class="form-group">
+                <label for="comment">Comment</label>
+                <input type="text" class="form-control" id="comment" placeholder="">
+            </div>
+            <p><span id="balance"></span><span id="pricealert"></span></p>
+            <button type="button" id="submit" class="btn btn-primary">Pay &amp; Comment</button>
+        </form>
+        <div id="formSubmitted" style="display:none">Please wait up to 10 seconds for confirmation ...</div>
+    </div>
+    
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th scope="col">Name</th>
+                <th scope="col">Comment</th>
+            </tr>
+        </thead>
+        <tbody id="comments">
+        </tbody>
+    </table>
+    <p style="text-align:center">All data recorded on the <a target="_blank" href="https://www.oasiseth.org">Oasis Ethereum</a> blockchain network.</p>
+</div>
+
+
+    <script type="text/javascript">
+    window.BuidlProviders = {
+      web3: {
+        url: "https://rpc.oasiseth.org:8545",
+        chainId: "69",
+        gasPrice: "1",
+        gasLimit: "8000000",
+      },
+      es: {
+        url: "https://devchain.ss.search.secondstate.io"
+      }
+    }
+    </script>
+    <script type="text/javascript" src="https://buidl.secondstate.io/embed/main.js"></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script type="text/javascript">
+    /* Don't modify */
+var abi = [];
+var bytecode = '';
+var cAddr = '';
+/* Don't modify */
+
+var instance = null;
+window.addEventListener('web3Ready', function() {
+  var contract = web3.ss.contract(abi);
+  instance = contract.at(cAddr);
+  reload();
+});
+
+var price = "0"; // This is in the unit of OETH. e.g., 0.01
+
+function reload() {
+    instance.message(function (e, r) {
+        $("#message").html(r);
+    });
+    instance.image(function (e, r) {
+        $("#image").prop("src", r);
+    });
+    instance.price(function (e, r) {
+        price = r;
+        $("#pricealert").html("Requires " + price + " wei to comment");
+    });
+    
+    $("#formSubmitted").css("display", "none");
+    web3.ss.getAccounts(function (e, address) {
+        if (!e) {
+            var balance = web3.ss.getBalance(address[0]);
+            $("#balance").html("You have " + balance + " wei OETH in your current account. ");
+
+            var comments = "";
+            instance.getAddrs(function (ee, addrs) {
+                addrs.forEach(function(addr) {
+                    instance.getComment(addr, function (ee, r) {
+                        if (!ee) {
+                            comments = comments + "<tr><td>" + r[0] + "</td><td>" + r[1] + "</td></tr>";
+                            $("#comments").html(comments);
+                        }
+                    });
+                });
+            });
+            $("#comments").html(comments);
+        }
+    });
+}
+
+$("#submit").click(function() {
+    if ((!$("#name").val().trim()) || (!$("#comment").val().trim())) {
+      alert("Please enter both a name and a comment");
+      return false;
+    }
+    web3.ss.getAccounts(function (e, address) {
+        if (!e) {
+            $("#form").css("display", "none");
+            $("#formSubmitted").css("display", "block");
+            instance.addComment ($("#name").val(), $("#comment").val(), {
+                value: price,
+                gas: 499000,
+                gasPrice: 1
+            }, function (ee, r) {
+                if (ee) {
+                    window.alert("You need to pay " + price + " OETH to comment. Make sure that you have it in your address.");
+                }
+            });
+            setTimeout(function () {
+                reload ();
+            }, 10 * 1000);
+        }
+    });
+    return false;
+});
+
+    </script>
+  </body>
+</html>
