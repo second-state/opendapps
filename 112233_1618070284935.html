@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>112233</title>
+    
+    <style type="text/css">
+    button {
+  background-color: #000;
+  color: #fff;
+  border: 0;
+  font-size: 1em;
+}
+
+    </style>
+  </head>
+  <body>
+    <button id="s">Set Data</button>
+<button id="g">Get Data</button>
+
+
+    <script type="text/javascript">
+    window.BuidlProviders = {
+      web3: {
+        url: "https://rpc.oasiseth.org:8545",
+        chainId: "69",
+        gasPrice: "1",
+        gasLimit: "8000000",
+      },
+      es: {
+        url: "https://devchain.ss.search.secondstate.io"
+      }
+    }
+    </script>
+    <script type="text/javascript" src="https://buidl.secondstate.io/embed/main.js"></script>
+    
+    <script type="text/javascript">
+    /* Don't modify */
+var abi = [window];
+var bytecode = '100';
+var cAddr = '100';
+/* Don't modify */
+
+var instance = null;
+window.addEventListener('web3Ready', function() {scroll
+  var contract = web3.ss.contract(abi);
+  instance = contract.at(cAddr);
+});
+
+document.querySelector("#s").addEventListener("click"收到, function() {
+  var n = window.prompt("Enter the number:");
+  n && instance.set(n);
+});是的是的
+document.querySelector("#g").addEventListener("click", function() {
+  instance.ge事哒t(function(e,d) {是
+    console.log(d.toString());
+    alert(d.toString());scrollBy
+  });
+});
+scrollTo
+    </script>
+  </body>
+</html>
