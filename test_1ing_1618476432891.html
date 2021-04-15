@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>test_1ing</title>
+    
+    <style type="text/css">
+    button {
+  background-color: #000;
+  color: #fff;
+  border: 0;
+  font-size: 1em;
+}
+    </style>
+  </head>
+  <body>
+    <button id="s">Set Data</button>
+ <button id="g">Get Data</button>
+
+    <script type="text/javascript">
+    window.BuidlProviders = {
+      web3: {
+        url: "https://rpc.oasiseth.org:8545/",
+        chainId: "69",
+        gasPrice: "0",
+        gasLimit: "8192000000",
+      },
+      es: {
+        url: "https://devchain.ss.search.secondstate.io"
+      }
+    }
+    </script>
+    <script type="text/javascript" src="https://buidl.secondstate.io/embed/main.js"></script>
+    
+    <script type="text/javascript">
+    /* Don't modify */
+var abi = [
+  	{
+    		"constant": false,
+        		"inputs": [],
+            		"name": "invest",
+                		"outputs": [],
+                    		"payable": true,
+                        		"stateMutability": "payable",
+                            		"type": "function"
+                                	},
+                                  	{
+                                    		"constant": false,
+                                        		"inputs": [
+                                            			{
+                                                  				"internalType": "address payable",
+                                                          				"name": "recipient",
+                                                                  				"type": "address"
+                                                                          			},
+                                                                                			{
+                                                                                      				"internalType": "uint256",
+                                                                                              				"name": "weight",
+                                                                                                      				"type": "uint256"
+                                                                                                              			},
+                                                                                                                    			{
+                                                                                                                          				"internalType": "uint256",
+                                                                                                                                  				"name": "category",
+                                                                                                                                          				"type": "uint256"
+                                                                                                                                                  			}
+                                                                                                                                                        		],
+                                                                                                                                                            		"name": "payout",
+                                                                                                                                                                		"outputs": [],
+                                                                                                                                                                    		"payable": false,
+                                                                                                                                                                        		"stateMutability": "nonpayable",
+                                                                                                                                                                            		"type": "function"
+                                                                                                                                                                                	},
+                                                                                                                                                                                  	{
+                                                                                                                                                                                    		"constant": true,
+                                                                                                                                                                                        		"inputs": [],
+                                                                                                                                                                                            		"name": "balanceof",
+                                                                                                                                                                                                		"outputs": [
+                                                                                                                                                                                                    			{
+                                                                                                                                                                                                          				"internalType": "uint256",
+                                                                                                                                                                                                                  				"name": "",
+                                                                                                                                                                                                                          				"type": "uint256"
+                                                                                                                                                                                                                                  			}
+                                                                                                                                                                                                                                        		],
+                                                                                                                                                                                                                                            		"payable": false,
+                                                                                                                                                                                                                                                		"stateMutability": "view",
+                                                                                                                                                                                                                                                    		"type": "function"
+                                                                                                                                                                                                                                                        	}
+                                                                                                                                                                                                                                                          ];
+
+var bytecode = '608060405234801561001057600080fd5b506102c1806100206000396000f3fe6080604052600436106100345760003560e01c80632980a5d314610039578063adf58c1514610064578063e8b5e51f146100c9575b600080fd5b34801561004557600080fd5b5061004e6100d3565b6040518082815260200191505060405180910390f35b34801561007057600080fd5b506100c76004803603606081101561008757600080fd5b81019080803573ffffffffffffffffffffffffffffffffffffffff16906020019092919080359060200190929190803590602001909291905050506100db565b005b6100d161022f565b005b600047905090…00803e3d6000fd5b50610228565b6005831115610227578373ffffffffffffffffffffffffffffffffffffffff166108fc8285029081150290604051600060405180830381858888f19350505050158015610225573d6000803e3d6000fd5b505b5b5b50505050565b6103e834101561023e57600080fd5b346000803373ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff1681526020019081526020016000206000828254019250508190555056fea265627a7a7231582006d403ad7594c39b3d0a5e8307a188d60d35aa87cb46a9f07cbeb6d38155bc8364736f6c63430005110032';
+var cAddr = '0x785ca3057f4319c80a0444f1025e89aFdAE8A150';
+/* Don't modify */
+
+var instance = null;
+window.addEventListener('web3Ready', function() {
+  var contract = web3.ss.contract(abi);
+  instance = contract.at(cAddr);
+});
+
+// esss.shaAbi(JSON.stringify(abi)).then((shaResult) => {
+//   var sha = JSON.parse(shaResult).abiSha3;
+//   esss.searchUsingAbi(sha).then((searchResult) => {
+//     console.log(searchResult);
+//   });
+// });
+
+document.querySelector("#s").addEventListener("click", function() {
+  var n = window.prompt("Enter the number:");
+  n && instance.set(n);
+});
+document.querySelector("#g").addEventListener("click", function() {
+  instance.get(function(e,d) {
+    console.log(d.toString());
+    alert(d.toString());
+  });
+});
+    </script>
+  </body>
+</html>
