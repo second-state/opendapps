@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>Parastate Spartan Task - Aravinth</title>
+    
+    <style type="text/css">
+    button {
+  background-color: rgb(163, 206, 123);
+  color: #fff;
+  border: 0;
+  font-size: 1em;
+}
+    </style>
+  </head>
+  <body>
+    <html>
+<body>
+    <h1> Parastate Spartan Task </h1>
+    <p></p>
+    <label id = "AccNo-lbl"></label>
+    <p></p>
+    <div>
+        <label>Enter the amount</label>
+        <input id="Enter_amount"/> 
+    </div>
+    <p> </p>
+    <div>
+        <label>Select action</label>        
+        <button id="Deposit">Deposit</button>
+        <button id="Withdraw">Withdraw</button>    
+    </div>
+    <p> </p>
+    <label> Options available </label>
+    <p> </p>
+    <div>
+        <button id="balance">Get-balance</button>        
+    </div>
+    <p></p>
+    <label id = "balance-lbl"></label>
+</body>
+</html>
+
+    <script type="text/javascript">
+    window.BuidlProviders = {
+      web3: {
+        url: "https://rpc.parastate.io:8545",
+        chainId: "123",
+        gasPrice: "1",
+        gasLimit: "8000000",
+      },
+      es: {
+        url: "https://devchain.ss.search.secondstate.io"
+      }
+    }
+    </script>
+    <script type="text/javascript" src="https://buidl.secondstate.io/embed/main.js"></script>
+    
+    <script type="text/javascript">
+    /* Don't modify */
+var abi = [
+  {
+    "constant": true,
+    "inputs": [],
+    "name": "getBalance",
+    "outputs": [
+      {
+        "name": "retVal",
+        "type": "int256"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [],
+    "name": "getAddress",
+    "outputs": [
+      {
+        "name": "a",
+        "type": "address"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "v",
+        "type": "int256"
+      }
+    ],
+    "name": "withdraw",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "v",
+        "type": "int256"
+      }
+    ],
+    "name": "deposit",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "constructor",
+    "constant": false
+  }
+];
+var bytecode = '608060405234801561001057600080fd5b5033600160006101000a81548173ffffffffffffffffffffffffffffffffffffffff021916908373ffffffffffffffffffffffffffffffffffffffff1602179055506000808190555061024b806100686000396000f300608060405260043610610062576000357c0100000000000000000000000000000000000000000000000000000000900463ffffffff16806312065fe01461006757806338cc4831146100925780637e62eab8146100e9578063f04991f014610116575b600080fd5b34801561007357600080fd5b5061007c610143565b6040518082815260200191505060405180910390f35b34801561009e57600080fd5b506100a761014c565b604051808273ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200191505060405180910390f35b3480156100f557600080fd5b5061011460048036038101908080359060200190929190505050610176565b005b34801561012257600080fd5b5061014160048036038101908080359060200190929190505050610201565b005b60008054905090565b6000600160009054906101000a900473ffffffffffffffffffffffffffffffffffffffff16905090565b600160009054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff163373ffffffffffffffffffffffffffffffffffffffff161415156101d257600080fd5b600081121515156101e257600080fd5b80600054121515156101f357600080fd5b806000540360008190555050565b6000811215151561021157600080fd5b8060005401600081905550505600a165627a7a7230582010f20551c8e1ab472ed77a09aaafe47a35531d16fcaf1253af64a61cdaf2dd580029';
+var cAddr = '0x2ae37a72e326da87ae3d5a8f1f09798959eee076';
+/* Don't modify */
+
+var instance = null;
+window.addEventListener('web3Ready', function () {
+  var contract = web3.ss.contract(abi);
+  instance = contract.at(cAddr);
+  document.getElementById('AccNo-lbl').innerHTML = "Account No : "+instance.getAddress()
+});
+
+// esss.shaAbi(JSON.stringify(abi)).then((shaResult) => {
+//   var sha = JSON.parse(shaResult).abiSha3;
+//   esss.searchUsingAbi(sha).then((searchResult) => {
+//     console.log(searchResult);
+//   });
+// });
+
+document.querySelector("#Deposit").addEventListener("click", function () {
+  var amount = document.getElementById('Enter_amount').value
+  instance.deposit(amount)
+});
+
+document.querySelector("#Withdraw").addEventListener("click", function () {
+  var amount = document.getElementById('Enter_amount').value
+  instance.withdraw(amount)
+});
+
+document.querySelector("#balance").addEventListener("click", function () {  
+  var curr_bal=instance.getBalance()
+  document.getElementById('balance-lbl').innerHTML=curr_bal;  
+});
+    </script>
+  </body>
+</html>
