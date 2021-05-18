@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>SimpleDapp</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" />
+    <style type="text/css">
+    .full_width {
+    width:100%;
+}
+
+.center_text {
+    text-align: center;
+}
+
+.spacer {
+    padding-top: 8px;
+    padding-bottom: 8px
+}
+    </style>
+  </head>
+  <body>
+    <!DOCTYPE html>
+<html>
+
+<head>
+    <title>Simple DApp</title>
+</head>
+
+<body>
+    <!-- Account balance -->
+    <div id="account_balance" class="form-row text-center">
+        <div class="col-sm-12 spacer">
+            <b>Check account balance</b>
+            <br />Please, paste account address below.
+            <br />
+            <input id="account_address_input" type="text" class="full_width spacer center_text" value="0x1BbE5edc5Caabf4517e40b766D64c3DEd86822Df" /> 👇
+            <br />
+            <button type="button" class="btn btn-primary btn-sm spacer" id="account_address_button" onclick="getBalance();">Check account balance</button>
+            <br />
+            <div id="account_address_output_wei" class="full_width center_text"></div>
+            <hr class="mt-2 mb-3" />
+        </div>
+
+    </div>
+    <br />
+</body>
+
+</html>
+
+    <script type="text/javascript">
+    window.BuidlProviders = {
+      web3: {
+        url: "https://rpc.oasiseth.org:8545",
+        chainId: "69",
+        gasPrice: "1",
+        gasLimit: "8000000",
+      },
+      es: {
+        url: "https://devchain.ss.search.secondstate.io"
+      }
+    }
+    </script>
+    <script type="text/javascript" src="https://buidl.secondstate.io/embed/main.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script type="text/javascript">
+    function getBalance() {
+    var address, wei, balance
+    address = document.getElementById("account_address_input").value;
+    console.log(address);
+    try {
+        web3.ss.getBalance(address, function(error, wei) {
+            if (!error) {
+                document.getElementById("account_address_output_wei").innerHTML = wei + " Wei";
+            }
+        });
+    } catch (err) {
+        console.log(err);
+        document.getElementById("account_address_output").innerHTML = err;
+    }
+}
+    </script>
+  </body>
+</html>
