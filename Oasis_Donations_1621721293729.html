@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>Oasis Donations</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" />
+    <style type="text/css">
+    
+    </style>
+  </head>
+  <body>
+    <div class="container">
+    <br/>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="jumbotron">
+                <div class="view overlay rounded-top text-center">
+                    <h2>Oasis Donations </h2>
+                    In this portal, you can create your campaigns to receive donations.
+You can invite your contacts to donate using their OETH balance
+                    <img src="https://www.65ymas.com/uploads/s1/30/79/53/bigstock-man-holds-gives-a-bag-of-mone-331345573.jpeg" class="img-fluid" id="image">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="jumbotron">
+                <div class="view overlay rounded-top text-center">
+                    <b>Create a campaign for donations</b>
+                <img src="https://www.tressis.com/blog/wp-content/uploads/2019/12/20191212-donacion.jpg" class="img-fluid" id="image">
+                </div>
+
+                <div class="card-body text-center mb-3">
+                <p class="card-text py-2" id="message"></p>
+                </div>
+
+                <hr/>
+                <form id="form_campaign">
+                    <div class="form-group">
+                        <label for="name">Title</label>
+                        <input type="text" class="form-control" id="title" placeholder="">
+                    </div>
+                    <div class="form-group">
+                        <label for="option1">Description</label>
+                        <input type="text" class="form-control" id="description" placeholder="">
+                    </div>
+                    <div class="form-group">
+                        <label for="option2">Website</label>
+                        <input type="url" class="form-control" id="website" placeholder="">
+                    </div>
+                    <p><span id="balance"></span><span id="pricealert"></span></p>
+                    <button type="button" id="submit_campaign" class="btn btn-primary">Create donation campaign</button>
+                </form>
+                <div id="formSubmitted_campaign" style="display:none">Please wait up to 10 seconds for confirmation of your campaign...</div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="jumbotron">
+                <div class="view overlay rounded-top text-center">
+                    <b>Donate to a charity</b>
+                    
+                <img src="https://www.bbva.com/wp-content/uploads/2016/10/crowdfunding1.jpg" class="img-fluid" id="image">
+                </div>
+
+                <div class="card-body text-center mb-3">
+                <p class="card-text py-2" id="message"></p>
+                </div>
+
+                <hr/>
+                <form id="form_donations">
+                    <div class="form-group">
+                        <label for="campaign">Select a campaign</label>
+                        <select name="cars" id="campaign" class="form-control">
+                            <option disabled>Select a campaign</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="ammount">Enter your amount</label>
+                        <input type="number" class="form-control" id="ammount" placeholder="Enter the amount for your donation">
+                    </div>
+                    <p><span id="balance"></span><span id="pricealert"></span></p>
+                    <button type="button" id="submit_donation" class="btn btn-primary">Donate</button>
+                </form>
+                <div id="formSubmitted_donation" style="display:none">Please wait up to 10 seconds for confirmation ...</div>
+            </div>
+        </div>
+    </div>
+    
+    <h3> List of campaigns and donations</h3>
+
+    <div class="row">
+        <div class="col-md-6">
+            <h4>Current campaigns</h4>
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th scope="col">Campaign</th>
+                            <th scope="col">Description</th>
+                            <th scope="col">Website</th>
+                        </tr>
+                    </thead>
+                    <tbody id="campaigns_donation">
+                    </tbody>
+                </table>
+        </div>
+        <div class="col-md-6">
+            <h4>Current donations</h4>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th scope="col">Campaign</th>
+                        <th scope="col">Donated amount</th>
+                        <th scope="col">Address</th>
+                    </tr>
+                </thead>
+                <tbody id="campaigns_donation">
+                </tbody>
+            </table>
+        </div>
+    </div>
+    
+    
+    <p style="text-align:center">All donations are recorded on the <a target="_blank" href="https://www.oasiseth.org">Oasis Ethereum</a> blockchain network.</p>
+</div>
+
+
+    <script type="text/javascript">
+    window.BuidlProviders = {
+      web3: {
+        url: "https://rpc.oasiseth.org:8545",
+        chainId: "69",
+        gasPrice: "1",
+        gasLimit: "8000000",
+      },
+      es: {
+        url: "https://devchain.ss.search.secondstate.io"
+      }
+    }
+    </script>
+    <script type="text/javascript" src="https://buidl.secondstate.io/embed/main.js"></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script type="text/javascript">
+    /* Don't modify */
+var abi = [{"constant":false,"inputs":[{"name":"_title","type":"string"},{"name":"_description","type":"string"},{"name":"_website","type":"string"}],"name":"addCampaign","outputs":[],"payable":true,"stateMutability":"payable","type":"function"},{"constant":false,"inputs":[],"name":"withdraw","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"getAddrs","outputs":[{"name":"","type":"address[]"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"name":"_addr","type":"address"}],"name":"getDonation","outputs":[{"name":"","type":"string"},{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"title","outputs":[{"name":"","type":"string"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"description","outputs":[{"name":"","type":"string"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"_title","type":"string"}],"name":"setTitle","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"_description","type":"string"}],"name":"setDescription","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"_price","type":"uint256"}],"name":"setPrice","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"price","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"website","outputs":[{"name":"","type":"string"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"_campaign","type":"string"},{"name":"_ammount","type":"uint256"}],"name":"addDonation","outputs":[],"payable":true,"stateMutability":"payable","type":"function"},{"constant":false,"inputs":[{"name":"_website","type":"string"}],"name":"setWebsite","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"inputs":[{"name":"_title","type":"string"},{"name":"_description","type":"string"},{"name":"_website","type":"string"},{"name":"_price","type":"uint256"}],"payable":false,"stateMutability":"nonpayable","type":"constructor","constant":false}];
+var bytecode = '60806040523480156200001157600080fd5b506040516200130b3803806200130b83398101806040528101908080518201929190602001805182019291906020018051820192919060200180519060200190929190505050336000806101000a81548173ffffffffffffffffffffffffffffffffffffffff021916908373ffffffffffffffffffffffffffffffffffffffff1602179055508360019080519060200190620000af929190620000f3565b50806004819055508260029080519060200190620000cf929190620000f3565b508160039080519060200190620000e8929190620000f3565b5050505050620001a2565b828054600181600116156101000203166002900490600052602060002090601f016020900481019282601f106200013657805160ff191683800117855562000167565b8280016001018555821562000167579182015b828111156200016657825182559160200191906001019062000149565b5b5090506200017691906200017a565b5090565b6200019f91905b808211156200019b57600081600090555060010162000181565b5090565b90565b61115980620001b26000396000f3006080604052600436106100c5576000357c0100000000000000000000000000000000000000000000000000000000900463ffffffff16806307403734146100ca5780633ccfd60b146101b25780633f416eb3146101c9578063410a1d32146102355780634a79d50c146102f85780637284e4161461038857806372910be01461041857806390c3f38f1461048157806391b7f5ed146104ea578063a035b1fe14610517578063beb0a41614610542578063d3f0ddcc146105d2578063f87f44b914610638575b600080fd5b6101b0600480360381019080803590602001908201803590602001908080601f0160208091040260200160405190810160405280939291908181526020018383808284378201915050505050509192919290803590602001908201803590602001908080601f0160208091040260200160405190810160405280939291908181526020018383808284378201915050505050509192919290803590602001908201803590602001908080601f01602080910402602001604051908101604052809392919081815260200183838082843782019150505050505091929192905050506106a1565b005b3480156101be57600080fd5b506101c7610852565b005b3480156101d557600080fd5b506101de61092e565b6040518080602001828103825283818151815260200191508051906020019060200280838360005b83811015610221578082015181840152602081019050610206565b505050509050019250505060405180910390f35b34801561024157600080fd5b50610276600480360381019080803573ffffffffffffffffffffffffffffffffffffffff1690602001909291905050506109bc565b6040518080602001838152602001828103825284818151815260200191508051906020019080838360005b838110156102bc5780820151818401526020810190506102a1565b50505050905090810190601f1680156102e95780820380516001836020036101000a031916815260200191505b50935050505060405180910390f35b34801561030457600080fd5b5061030d610aea565b6040518080602001828103825283818151815260200191508051906020019080838360005b8381101561034d578082015181840152602081019050610332565b50505050905090810190601f16801561037a5780820380516001836020036101000a031916815260200191505b509250505060405180910390f35b34801561039457600080fd5b5061039d610b88565b6040518080602001828103825283818151815260200191508051906020019080838360005b838110156103dd5780820151818401526020810190506103c2565b50505050905090810190601f16801561040a5780820380516001836020036101000a031916815260200191505b509250505060405180910390f35b34801561042457600080fd5b5061047f600480360381019080803590602001908201803590602001908080601f0160208091040260200160405190810160405280939291908181526020018383808284378201915050505050509192919290505050610c26565b005b34801561048d57600080fd5b506104e8600480360381019080803590602001908201803590602001908080601f0160208091040260200160405190810160405280939291908181526020018383808284378201915050505050509192919290505050610c9b565b005b3480156104f657600080fd5b5061051560048036038101908080359060200190929190505050610d10565b005b34801561052357600080fd5b5061052c610d75565b6040518082815260200191505060405180910390f35b34801561054e57600080fd5b50610557610d7b565b6040518080602001828103825283818151815260200191508051906020019080838360005b8381101561059757808201518184015260208101905061057c565b50505050905090810190601f1680156105c45780820380516001836020036101000a031916815260200191505b509250505060405180910390f35b610636600480360381019080803590602001908201803590602001908080601f016020809104026020016040519081016040528093929190818152602001838380828437820191505050505050919291929080359060200190929190505050610e19565b005b34801561064457600080fd5b5061069f600480360381019080803590602001908201803590602001908080601f0160208091040260200160405190810160405280939291908181526020018383808284378201915050505050509192919290505050610f93565b005b60045434101515156106b257600080fd5b600660003373ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200190815260200160002060030160009054906101000a900460ff16151561076f5760073390806001815401808255809150509060018203906000526020600020016000909192909190916101000a81548173ffffffffffffffffffffffffffffffffffffffff021916908373ffffffffffffffffffffffffffffffffffffffff160217905550505b60806040519081016040528084815260200183815260200182815260200160011515815250600660003373ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200190815260200160002060008201518160000190805190602001906107ef929190611008565b50602082015181600101908051906020019061080c929190611008565b506040820151816002019080519060200190610829929190611008565b5060608201518160030160006101000a81548160ff021916908315150217905550905050505050565b6000809054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff163373ffffffffffffffffffffffffffffffffffffffff161415156108ad57600080fd5b6000809054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff166108fc3073ffffffffffffffffffffffffffffffffffffffff16319081150290604051600060405180830381858888f1935050505015801561092b573d6000803e3d6000fd5b50565b606060078054806020026020016040519081016040528092919081815260200182805480156109b257602002820191906000526020600020905b8160009054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff1681526020019060010190808311610968575b5050505050905090565b60606000600560008473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff168152602001908152602001600020600001600560008573ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200190815260200160002060010154818054600181600116156101000203166002900480601f016020809104026020016040519081016040528092919081815260200182805460018160011615610100020316600290048015610ada5780601f10610aaf57610100808354040283529160200191610ada565b820191906000526020600020905b815481529060010190602001808311610abd57829003601f168201915b5050505050915091509150915091565b60018054600181600116156101000203166002900480601f016020809104026020016040519081016040528092919081815260200182805460018160011615610100020316600290048015610b805780601f10610b5557610100808354040283529160200191610b80565b820191906000526020600020905b815481529060010190602001808311610b6357829003601f168201915b505050505081565b60028054600181600116156101000203166002900480601f016020809104026020016040519081016040528092919081815260200182805460018160011615610100020316600290048015610c1e5780601f10610bf357610100808354040283529160200191610c1e565b820191906000526020600020905b815481529060010190602001808311610c0157829003601f168201915b505050505081565b6000809054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff163373ffffffffffffffffffffffffffffffffffffffff16141515610c8157600080fd5b8060019080519060200190610c97929190611088565b5050565b6000809054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff163373ffffffffffffffffffffffffffffffffffffffff16141515610cf657600080fd5b8060029080519060200190610d0c929190611088565b5050565b6000809054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff163373ffffffffffffffffffffffffffffffffffffffff16141515610d6b57600080fd5b8060048190555050565b60045481565b60038054600181600116156101000203166002900480601f016020809104026020016040519081016040528092919081815260200182805460018160011615610100020316600290048015610e115780601f10610de657610100808354040283529160200191610e11565b820191906000526020600020905b815481529060010190602001808311610df457829003601f168201915b505050505081565b6004543410151515610e2a57600080fd5b600560003373ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200190815260200160002060020160009054906101000a900460ff161515610ee75760073390806001815401808255809150509060018203906000526020600020016000909192909190916101000a81548173ffffffffffffffffffffffffffffffffffffffff021916908373ffffffffffffffffffffffffffffffffffffffff160217905550505b60606040519081016040528083815260200182815260200160011515815250600560003373ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff1681526020019081526020016000206000820151816000019080519060200190610f61929190611008565b506020820151816001015560408201518160020160006101000a81548160ff0219169083151502179055509050505050565b6000809054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff163373ffffffffffffffffffffffffffffffffffffffff16141515610fee57600080fd5b8060039080519060200190611004929190611088565b5050565b828054600181600116156101000203166002900490600052602060002090601f016020900481019282601f1061104957805160ff1916838001178555611077565b82800160010185558215611077579182015b8281111561107657825182559160200191906001019061105b565b5b5090506110849190611108565b5090565b828054600181600116156101000203166002900490600052602060002090601f016020900481019282601f106110c957805160ff19168380011785556110f7565b828001600101855582156110f7579182015b828111156110f65782518255916020019190600101906110db565b5b5090506111049190611108565b5090565b61112a91905b8082111561112657600081600090555060010161110e565b5090565b905600a165627a7a72305820f07cd9f05bcd187fe0a081ba0c97b1df8d4ddca1a27da017f2286a2f64cd7f460029';
+var cAddr = '';
+/* Don't modify */
+
+var instance = null;
+window.addEventListener('web3Ready', function() {
+  var contract = web3.ss.contract(abi);
+  instance = contract.at(cAddr);
+  reload();
+});
+
+var price = "0"; // This is in the unit of OETH. e.g., 0.01
+
+function reload() {
+    
+    $("#formSubmitted_campaign").css("display", "none");
+    $("#formSubmitted_donation").css("display", "none");
+    web3.ss.getAccounts(function (e, address) {
+        if (!e) {
+            var balance = web3.ss.getBalance(address[0]);
+            $("#balance_campaign").html("You have " + balance + " wei OETH in your current account. ");
+
+            var donations = "";
+            var campaigns = [];
+            instance.getAddrs(function (ee, addrs) {
+                addrs.forEach(function(addr) {
+                    instance.getDonation(addr, function (ee, r) {
+                        if (!ee) {
+                            donations = donations + "<tr><td>" + r[0] + "</td><td>" + r[1] + "</td><td>"+addr+"</td></tr>";
+                            $("#campaigns_donation").html(donations);
+                            $("#campaign").append(new Option(r[0], r[0]));
+                        }
+                    });
+                });
+            });
+            $("#campaigns_donation").html(donations);
+        }
+    });
+}
+
+$("#submit_campaign").click(function() {
+    if ((!$("#title").val().trim()) || (!$("#description").val().trim()) || (!$("#website").val().trim())) {
+      alert("Please enter the title, description and website for accepting donations.");
+      return false;
+    }
+    web3.ss.getAccounts(function (e, address) {
+        if (!e) {
+            $("#form_campaign").css("display", "none");
+            $("#formSubmitted_campaign").css("display", "block");
+            instance.addCampaign ($("#title").val(), $("#description").val(),$("#website").val(), {
+                value: price,
+                gas: 499000,
+                gasPrice: 1
+            }, function (ee, r) {
+                if (ee) {
+                    window.alert("You need to pay " + price + " OETH to create a campaign. Make sure that you have it in your address.");
+                }
+            });
+            setTimeout(function () {
+                reload();
+            }, 10 * 1000);
+        }
+    });
+    return false;
+});
+
+
+$("#submit_donation").click(function() {
+    if ((!$("#campaign").text().trim()) || (!$("#ammount").val().trim())) {
+      alert("Please enter the campaign and your donation.");
+      return false;
+    }
+    web3.ss.getAccounts(function (e, address) {
+        if (!e) {
+            $("#form_donations").css("display", "none");
+            $("#formSubmitted_donation").css("display", "block");
+            instance.addDonation ($("#campaign").val(), $("#ammount").val(), {
+                value: price,
+                gas: 499000,
+                gasPrice: 1
+            }, function (ee, r) {
+                if (ee) {
+                    window.alert("You need to pay " + price + " OETH to donate. Make sure that you have it in your address.");
+                }
+            });
+            setTimeout(function () {
+                reload ();
+            }, 10 * 1000);
+        }
+    });
+    return false;
+});
+    </script>
+  </body>
+</html>
