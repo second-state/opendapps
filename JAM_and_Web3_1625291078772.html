@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>JAM_and_Web3</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" /><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css" />
+    <style type="text/css">
+    button {
+  background-color: #000;
+  color: #fff;
+  border: 0;
+  font-size: 1em;
+}
+
+.full_width {
+    width:100%;
+}
+
+.center_text {
+    text-align: center;
+}
+
+.spacer {
+    padding-top: 8px;
+    padding-bottom: 8px
+}
+    </style>
+  </head>
+  <body>
+    <div id="outer" class="container">
+    <!-- init -->
+    <div id="image" class="form-row text-center">
+        <div class="col-sm-12">
+            <img src="https://avatars.githubusercontent.com/u/78342518?s=200&v=4">
+            <hr class="mt-2 mb-3"/>
+        </div>
+    </div>
+    <br />
+    <!-- ChainId -->
+    <div id="chain" class="form-row text-center">
+
+        <div class="col-sm-12 spacer">
+            <b>Block height</b>
+            <br />Please, press button to get the block height.
+            <br />
+            👇<br />
+            <button type="button" class="btn btn-primary btn-sm spacer" id="block_number_button" onclick="getBlockNumber();">Get block height</button>
+            <div id="block_number_output" class="full_width spacer center_text"></div>
+            <hr class="mt-2 mb-3"/>
+        </div>
+        <div class="col-sm-12 spacer">
+            <b>Store data</b>
+            <br />
+            Please enter a number. 
+            <br />
+            <input id="number_input" type="text" class="full_width spacer center_text" value="12345"/>
+            <br />
+            Then press button to store a number.
+            <br />
+            👇<br />
+            <button type="button" class="btn btn-primary btn-sm spacer" id="store_data_button" onclick="storeData();">Store number</button>
+            <div id="store_data_output" class="full_width spacer center_text"></div>
+            <hr class="mt-2 mb-3"/>
+        </div>
+                <div class="col-sm-12 spacer">
+            <b>Retrieve data</b>
+            <br />Please, press button to retrieve data.
+            <br />
+            👇<br />
+            <button type="button" class="btn btn-primary btn-sm spacer" id="retrieve_data_button" onclick="retrieveData();">Retrive data</button>
+            <div id="retrieve_data_output" class="full_width spacer center_text"></div>
+            <hr class="mt-2 mb-3"/>
+        </div>
+
+
+    </div>
+</div>
+
+
+    <script type="text/javascript">
+    window.BuidlProviders = {
+      web3: {
+        url: "https://rpc.parastate.io:8545",
+        chainId: "123",
+        gasPrice: "1",
+        gasLimit: "8000000",
+      },
+      es: {
+        url: "https://devchain.ss.search.secondstate.io"
+      }
+    }
+    </script>
+    <script type="text/javascript" src="https://buidl.secondstate.io/embed/main.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.js"></script><script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script><script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+    <script type="text/javascript">
+    /* Don't modify */
+var abi = [{"constant":false,"inputs":[{"name":"x","type":"uint256"}],"name":"set","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"get","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"}];
+var bytecode = '608060405234801561001057600080fd5b5060df8061001f6000396000f3006080604052600436106049576000357c0100000000000000000000000000000000000000000000000000000000900463ffffffff16806360fe47b114604e5780636d4ce63c146078575b600080fd5b348015605957600080fd5b5060766004803603810190808035906020019092919050505060a0565b005b348015608357600080fd5b50608a60aa565b6040518082815260200191505060405180910390f35b8060008190555050565b600080549050905600a165627a7a72305820c25af45c42c01588809d8cd09c19adf172a81cde693d4c7ac17859b447f9ca6c0029';
+var cAddr = '0xfc7470da11ca9a3e0cc4efcc34b7d0053d82d6d7';
+/* Don't modify */
+
+var instance = null;
+window.addEventListener('web3Ready', function() {
+    var contract = web3.ss.contract(abi);
+    instance = contract.at(cAddr);
+});
+
+
+function getBlockNumber() {
+    try {
+        web3.ss.getBlockNumber(function(error, blockNumber) {
+            if (!error) {
+                document.getElementById("block_number_output").innerHTML = "Block number: " + blockNumber;
+            }
+        });
+    } catch (err) {
+        document.getElementById("block_number_output").innerHTML = err;
+    }
+}
+
+function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+async function waitBlock(_tx_hash) {
+    var ready_to_break = false;
+    while (true) {
+        if (ready_to_break == false) {
+            web3.ss.getTransactionReceipt(_tx_hash, function(err, res_rec) {
+                if (!err) {
+                    if (res_rec != null && res_rec != undefined) {
+                        console.log(JSON.stringify(res_rec));
+                        Toastify({
+                            text: "Success",
+                            duration: 5000,
+                            destination: "http://scan.parastate.io/tx/" + _tx_hash,
+                            newWindow: true,
+                            close: true,
+                            gravity: "top", // `top` or `bottom`
+                            position: "right", // `left`, `center` or `right`
+                            backgroundColor: "linear-gradient(to right, #00b09b, #96c93d)",
+                            stopOnFocus: false, // Prevents dismissing of toast on hover
+                            onClick: function() {} // Callback after click
+                        }).showToast();
+                        ready_to_break = true;
+                    } else {
+                        console.log("Waiting for transaction receipt");
+                    }
+                } else {
+                    ready_to_break = true;
+                }
+            });
+            await sleep(1000);
+        } else {
+            break;
+        }
+    }
+}
+
+function storeData() {
+    var number = document.getElementById("number_input").value;
+    instance.set(number, function(error, response) {
+        if (!error) {
+            //var ready = new READY();
+            Toastify({
+                text: "Transaction sent, please wait ...",
+                duration: 5000,
+                destination: "http://scan.parastate.io/tx/" + response,
+                newWindow: true,
+                close: true,
+                gravity: "top", // `top` or `bottom`
+                position: "right", // `left`, `center` or `right`
+                backgroundColor: "linear-gradient(to right, #FF8CFA, #FFDCFD)",
+                stopOnFocus: false, // Prevents dismissing of toast on hover
+                onClick: function() {} // Callback after click
+            }).showToast();
+            waitBlock(response);
+        } else {
+            document.getElementById("store_data_output").innerHTML = error;
+        }
+
+    });
+}
+
+function retrieveData() {
+    instance.get(function(e, data) {
+        document.getElementById("retrieve_data_output").innerHTML = "Data retrieved: " + data;
+    });
+}
+
+    </script>
+  </body>
+</html>
