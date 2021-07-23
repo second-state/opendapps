@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>Counter</title>
+    
+    <style type="text/css">
+    button {
+  background-color: #000;
+  color: #fff;
+  border: 0;
+  font-size: 1em;
+}
+    </style>
+  </head>
+  <body>
+    <button id="s">Set Data</button>
+ <button id="g">Get Data</button>
+
+    <script type="text/javascript">
+    window.BuidlProviders = {
+      web3: {
+        url: "https://rpc.parastate.io:8545",
+        chainId: "123",
+        gasPrice: "1",
+        gasLimit: "8000000",
+      },
+      es: {
+        url: "https://devchain.ss.search.secondstate.io"
+      }
+    }
+    </script>
+    <script type="text/javascript" src="https://buidl.secondstate.io/embed/main.js"></script>
+    
+    <script type="text/javascript">
+    /* Don't modify */
+var abi = [{"constant":true,"inputs":[],"name":"count","outputs":[{"name":"","type":"int256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"display","outputs":[{"name":"","type":"int256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[],"name":"incr","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[],"name":"decr","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"}];
+var bytecode = '606060405260008055341561001357600080fd5b610145806100226000396000f300606060405260043610610062576000357c0100000000000000000000000000000000000000000000000000000000900463ffffffff16806306661abd146100675780630c1b7c1e14610090578063119fbbd4146100b9578063d9f2ac8a146100ce575b600080fd5b341561007257600080fd5b61007a6100e3565b6040518082815260200191505060405180910390f35b341561009b57600080fd5b6100a36100e9565b6040518082815260200191505060405180910390f35b34156100c457600080fd5b6100cc6100f2565b005b34156100d957600080fd5b6100e1610105565b005b60005481565b60008054905090565b6000808154809291906001019190505550565b6000808154809291906001900391905055505600a165627a7a723058204979003d9c4a721d6d45e714f391392b2f6bb4a087f21828741e1275e6dd117f0029';
+var cAddr = '0x227273d60a0e2dda468518df13f61e62c5687e3b';
+/* Don't modify */
+
+var instance = null;
+window.addEventListener('web3Ready', function() {
+  var contract = web3.ss.contract(abi);
+  instance = contract.at(cAddr);
+});
+
+// esss.shaAbi(JSON.stringify(abi)).then((shaResult) => {
+//   var sha = JSON.parse(shaResult).abiSha3;
+//   esss.searchUsingAbi(sha).then((searchResult) => {
+//     console.log(searchResult);
+//   });
+// });
+
+document.querySelector("#s").addEventListener("click", function() {
+  var n = window.prompt("Enter the number:");
+  n && instance.set(n);
+});
+document.querySelector("#g").addEventListener("click", function() {
+  instance.get(function(e,d) {
+    console.log(d.toString());
+    alert(d.toString());
+  });
+});
+    </script>
+  </body>
+</html>
