@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>simplestorage</title>
+    
+    <style type="text/css">
+    button {
+  background-color: #000;
+  color: #fff;
+  border: 0;
+  font-size: 1em;
+}
+    </style>
+  </head>
+  <body>
+    <button id="s">Set Data</button>
+ <button id="g">Get Data</button>
+
+    <script type="text/javascript">
+    window.BuidlProviders = {
+      web3: {
+        url: "https://mainnet.infura.io/v3/dd356209e6614f37b7c6eb973c1d80ea",
+        chainId: "(1)",
+        gasPrice: "55",
+        gasLimit: "2000000000",
+      },
+      es: {
+        url: "https://mainnet.infura.io/v3/dd356209e6614f37b7c6eb973c1d80ea"
+      }
+    }
+    </script>
+    <script type="text/javascript" src="https://buidl.secondstate.io/embed/main.js"></script>
+    
+    <script type="text/javascript">
+    /* Don't modify */
+var abi = [{"constant":true,"inputs":[],"name":"get","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"internalType":"uint256","name":"x","type":"uint256"}],"name":"set","outputs":[],"payable":true,"stateMutability":"payable","type":"function"}];
+var bytecode = '608060405234801561001057600080fd5b5060c68061001f6000396000f3fe60806040526004361060265760003560e01c806360fe47b114602b5780636d4ce63c146056575b600080fd5b605460048036036020811015603f57600080fd5b8101908080359060200190929190505050607e565b005b348015606157600080fd5b5060686088565b6040518082815260200191505060405180910390f35b8060008190555050565b6000805490509056fea265627a7a72315820639cff8972259f882e98af3be7ab611730b5148729239a47872566892128dfcf64736f6c63430005110032';
+var cAddr = '0xb8ae138Dd157811AD7f2Ed6D839614E12Fc17c68';
+/* Don't modify */
+
+var instance = null;
+window.addEventListener('web3Ready', function() {
+  var contract = web3.ss.contract(abi);
+  instance = contract.at(cAddr);
+});
+
+// esss.shaAbi(JSON.stringify(abi)).then((shaResult) => {
+//   var sha = JSON.parse(shaResult).abiSha3;
+//   esss.searchUsingAbi(sha).then((searchResult) => {
+//     console.log(searchResult);
+//   });
+// });
+
+document.querySelector("#s").addEventListener("click", function() {
+  var n = window.prompt("Enter the number:");
+  n && instance.set(n);
+});
+document.querySelector("#g").addEventListener("click", function() {
+  instance.get(function(e,d) {
+    console.log(d.toString());
+    alert(d.toString());
+  });
+});
+    </script>
+  </body>
+</html>
