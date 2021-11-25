@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>vote_demo</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" />
+    <style type="text/css">
+    button {
+  background-color: #000;
+  color: #fff;
+  border: 0;
+  font-size: 1em;
+}
+    </style>
+  </head>
+  <body>
+    <div class="container">
+   <br/>
+   <div class="jumbotron">
+      <p class="lead" id="greeting"></p>
+      <div id="imageDiv" style="display:none">
+         <img id="image" src="https://docs.secondstate.io/~/files/v0/b/gitbook-28427.appspot.com/o/assets%2F-Ljq8VpUhFWpzGRMLvdp%2F-Lq37yyrS8vsRKlAc-z3%2F-Lq38GS31rwA0NqfJZsW%2FScreen%20Shot%202019-09-30%20at%201.25.37%20PM.png?alt=media&token=c05e2ac3-12c6-4ca4-96ec-7a34a5f26d3d" class="img-fluid img-thumbnail"/>
+      </div>
+      <hr/>
+      <p id="votes" style="display:none">
+         <span id="ups"></span> voted 👍 |
+         <span id="downs"></span> voted 👎
+      </p>
+      <form id="form" class="form-inline" style="display:none">
+         <button id="voteUp" type="button" onclick="return vote(1);" class="btn btn-secondary mb-2">👍</button>
+         <button id="voteDown" type="button" onclick="return vote(-1);" class="btn btn-secondary mb-2">👎</button>
+      </form>
+      <div id="formSubmitted" style="display:none">Please wait 2 seconds ...</div>
+      <div id="myVoteUp" style="display:none">You have already voted 👍</div>
+      <div id="myVoteDown" style="display:none">You have already voted 👎</div>
+   </div>
+</div>
+
+    <script type="text/javascript">
+    window.BuidlProviders = {
+      web3: {
+        url: "https://kovan.infura.io/v3/9aa3d95b3bc440fa88ea12eaa4456161",
+        chainId: "42",
+        gasPrice: "10000000000",
+        gasLimit: "8000000",
+      },
+      es: {
+        url: ""
+      }
+    }
+    </script>
+    <script type="text/javascript" src="https://buidl.secondstate.io/embed/main.js"></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script type="text/javascript">
+    /* Don't modify */
+var abi = [{"constant":true,"inputs":[],"name":"getVotes","outputs":[{"name":"","type":"uint256"},{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"_choice","type":"int256"}],"name":"vote","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[{"name":"_addr","type":"address"}],"name":"getVote","outputs":[{"name":"","type":"int256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"photoUrl","outputs":[{"name":"","type":"string"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"greeting","outputs":[{"name":"","type":"string"}],"payable":false,"stateMutability":"view","type":"function"},{"inputs":[{"name":"_greeting","type":"string"},{"name":"_photoUrl","type":"string"}],"payable":false,"stateMutability":"nonpayable","type":"constructor","constant":false}];
+var bytecode = '608060405234801561001057600080fd5b5060405161065538038061065583398101806040528101908080518201929190602001805182019291905050508160009080519060200190610053929190610072565b50806001908051906020019061006a929190610072565b505050610117565b828054600181600116156101000203166002900490600052602060002090601f016020900481019282601f106100b357805160ff19168380011785556100e1565b828001600101855582156100e1579182015b828111156100e05782518255916020019190600101906100c5565b5b5090506100ee91906100f2565b5090565b61011491905b808211156101105760008160009055506001016100f8565b5090565b90565b61052f806101266000396000f30060806040526004361061006d576000357c0100000000000000000000000000000000000000000000000000000000900463ffffffff1680630dc96015146100725780633891c320146100a45780638d337b81146100d1578063e7c42abc14610128578063ef690cc0146101b8575b600080fd5b34801561007e57600080fd5b50610087610248565b604051808381526020018281526020019250505060405180910390f35b3480156100b057600080fd5b506100cf60048036038101908080359060200190929190505050610259565b005b3480156100dd57600080fd5b50610112600480360381019080803573ffffffffffffffffffffffffffffffffffffffff16906020019092919050505061037e565b6040518082815260200191505060405180910390f35b34801561013457600080fd5b5061013d6103c7565b6040518080602001828103825283818151815260200191508051906020019080838360005b8381101561017d578082015181840152602081019050610162565b50505050905090810190601f1680156101aa5780820380516001836020036101000a031916815260200191505b509250505060405180910390f35b3480156101c457600080fd5b506101cd610465565b6040518080602001828103825283818151815260200191508051906020019080838360005b8381101561020d5780820151818401526020810190506101f2565b50505050905090810190601f16801561023a5780820380516001836020036101000a031916815260200191505b509250505060405180910390f35b600080600354600454915091509091565b6000600260003373ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff168152602001908152602001600020541415156102a757600080fd5b60018114806102d557507fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff81145b15156102e057600080fd5b80600260003373ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff168152602001908152602001600020819055506001811415610340576003600081548092919060010191905055505b7fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff81141561037b576004600081548092919060010191905055505b50565b6000600260008373ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff168152602001908152602001600020549050919050565b60018054600181600116156101000203166002900480601f01602080910402602001604051908101604052809291908181526020018280546001816001161561010002031660029004801561045d5780601f106104325761010080835404028352916020019161045d565b820191906000526020600020905b81548152906001019060200180831161044057829003601f168201915b505050505081565b60008054600181600116156101000203166002900480601f0160208091040260200160405190810160405280929190818152602001828054600181600116156101000203166002900480156104fb5780601f106104d0576101008083540402835291602001916104fb565b820191906000526020600020905b8154815290600101906020018083116104de57829003601f168201915b5050505050815600a165627a7a7230582016264567c884d8191d815ed94522d3e517f46ad51e0989db3c46053abb5a55660029';
+var cAddr = '0x5cc2ed18bb385bef6316bd68e002dce40b6890c4';
+/* Don't modify */
+
+var instance = null;
+window.addEventListener('web3Ready', function() {
+  var contract = web3.ss.contract(abi);
+  instance = contract.at(cAddr);
+  reload();
+});
+
+function reload() {
+    instance.greeting(function (e, r) {
+        $("#greeting").html(r);
+    });
+    instance.photoUrl(function (e, r) {
+        if (!e && r) {
+            $("#imageDiv").css("display", "block");
+            $("#image").attr("src", r);
+        }
+    });
+    instance.getVotes(function (e, r) {
+        if (!e && (r[0] > 0 || r[1] > 0)) {
+            $("#votes").css("display", "block");
+            $("#ups").text(r[0]);
+            $("#downs").text(r[1]);
+        }
+    });
+
+    $("#form").css("display", "none");
+    $("#formSubmitted").css("display", "none");
+    web3.ss.getAccounts(function (e, address) {
+        if (!e) {
+            instance.getVote(address, function (ee, r) {
+                if (r == 1) {
+                    $("#myVoteUp").css("display", "block");
+                } else if (r == -1) {
+                    $("#myVoteDown").css("display", "block");
+                } else {
+                    $("#form").css("display", "block");
+                }
+            });
+        }
+    });
+}
+
+function vote (choice) {
+    web3.ss.getAccounts(function (e, address) {
+        if (!e) {
+            $("#form").css("display", "none");
+            $("#formSubmitted").css("display", "block");
+            instance.vote(choice, function (ee, result) {
+                if (ee) {
+                    window.alert("Failed for " + address);
+                }
+            });
+            setTimeout(function () {
+                reload ();
+            }, 2 * 1000);
+        }
+    });
+    return false;
+}
+    </script>
+  </body>
+</html>
