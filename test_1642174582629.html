@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>test</title>
+    
+    <style type="text/css">
+    button {
+  background-color: #000;
+  color: #fff;
+  border: 0;
+  font-size: 1em;
+}
+    </style>
+  </head>
+  <body>
+    <div class="container">
+   <br/>
+   <div class="alert alert-primary" role="alert">If you have MetaMask, select MetaMask in the accounts widget at bottom right.</div>
+   <div class="jumbotron">
+      <p class="lead" id="greeting"></p>
+      <div id="imageDiv" style="display:none">
+         <img id="image" src="" class="img-fluid img-thumbnail"/>
+      </div>
+      <hr/>
+      <p id="votes" style="display:none">
+         <span id="ups"></span> voted 👍 |
+         <span id="downs"></span> voted 👎
+      </p>
+      <form id="form" class="form-inline" style="display:none">
+         <button id="voteUp" type="button" onclick="return vote(1);" class="btn btn-secondary mb-2">👍</button>
+         <button id="voteDown" type="button" onclick="return vote(-1);" class="btn btn-secondary mb-2">👎</button>
+      </form>
+      <div id="formSubmitted" style="display:none">Please wait up to 42 seconds for confirmation ...</div>
+      <div id="myVoteUp" style="display:none">You have already voted 👍</div>
+      <div id="myVoteDown" style="display:none">You have already voted 👎</div>
+   </div>
+   <p>You need to pay a tiny amoun to vote. Make sure that you have at least 0.1 ETC at your current account address: <a target="_blank" href="" id="myAddr"></a></p>
+   <p style="text-align:center">Created with <a target="_blank" href="https://www.secondstate.io/etc/">BUIDL for ETC</a>. Checkout the <a target="_blank" href="https://docs.secondstate.io/buidl-developer-tool/demo-a-voting-dapp/ethereum-classic">tutorial</a> to create your own!</p>
+</div>
+
+    <script type="text/javascript">
+    window.BuidlProviders = {
+      web3: {
+        url: "https://rpc.parastate.io:8545",
+        chainId: "123",
+        gasPrice: "0",
+        gasLimit: "8192000000",
+      },
+      es: {
+        url: "https://etc.search.secondstate.io"
+      }
+    }
+    </script>
+    <script type="text/javascript" src="https://buidl.secondstate.io/embed/main.js"></script>
+    
+    <script type="text/javascript">
+    /* Don't modify */
+var abi = [];
+var bytecode = '';
+var cAddr = '';
+/* Don't modify */
+
+var instance = null;
+window.addEventListener('web3Ready', function() {
+  var contract = web3.ss.contract(abi);
+  instance = contract.at(cAddr);
+});
+
+// esss.shaAbi(JSON.stringify(abi)).then((shaResult) => {
+//   var sha = JSON.parse(shaResult).abiSha3;
+//   esss.searchUsingAbi(sha).then((searchResult) => {
+//     console.log(searchResult);
+//   });
+// });
+
+document.querySelector("#s").addEventListener("click", function() {
+  var n = window.prompt("Enter the number:");
+  n && instance.set(n);
+});
+document.querySelector("#g").addEventListener("click", function() {
+  instance.get(function(e,d) {
+    console.log(d.toString());
+    alert(d.toString());
+  });
+});
+    </script>
+  </body>
+</html>
