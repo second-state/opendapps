@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>dvr433333333333333333</title>
+    
+    <style type="text/css">
+    button {
+  background-color: #000;
+  color: #fff;
+  border: 0;
+  font-size: 1em;
+}
+    </style>
+  </head>
+  <body>
+    pragma solidity >=0.8.4;
+
+contract MyCoin {
+    mapping (address => uint) balances;
+    event Transfer(address indexed _from, address indexed _to, uint256 _value);
+    constructor()  {
+        balances[tx.origin] = 10000;
+    }
+    function sendCoin(address receiver, uint amount) public returns(bool success) {
+        if (balances[msg.sender] < amount) return false;
+
+        balances[msg.sender] -= amount;
+        balances[receiver] += amount;
+        emit Transfer(msg.sender, receiver, amount);
+        return true;    }
+
+    function getBalance(address addr) public view returns(uint) {
+        return balances[addr];
+    }
+}
+
+    <script type="text/javascript">
+    window.BuidlProviders = {
+      web3: {
+        url: "https://www.ethercluster.com/etc",
+        chainId: "61",
+        gasPrice: "3000000000",
+        gasLimit: "5000000",
+      },
+      es: {
+        url: "https://etc.search.secondstate.io"
+      }
+    }
+    </script>
+    <script type="text/javascript" src="https://buidl.secondstate.io/embed/main.js"></script>
+    
+    <script type="text/javascript">
+    /* Don't modify */
+var abi = [];
+var bytecode = '';
+var cAddr = '';
+/* Don't modify */
+
+var instance = null;
+window.addEventListener('web3Ready', function() {
+  var contract = web3.ss.contract(abi);
+  instance = contract.at(cAddr);
+});
+
+// esss.shaAbi(JSON.stringify(abi)).then((shaResult) => {
+//   var sha = JSON.parse(shaResult).abiSha3;
+//   esss.searchUsingAbi(sha).then((searchResult) => {
+//     console.log(searchResult);
+//   });
+// });
+
+document.querySelector("#s").addEventListener("click", function() {
+  var n = window.prompt("Enter the number:");
+  n && instance.set(n);
+});
+document.querySelector("#g").addEventListener("click", function() {
+  instance.get(function(e,d) {
+    console.log(d.toString());
+    alert(d.toString());
+  });
+});
+    </script>
+  </body>
+</html>
