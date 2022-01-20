@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>sss</title>
+    
+    <style type="text/css">
+    button {
+  background-color: #000;
+  color: #fff;
+  border: 0;
+  font-size: 1em;
+}
+    </style>
+  </head>
+  <body>
+    Skip to content
+Why GitHub? 
+Team
+Enterprise
+Explore 
+Marketplace
+Pricing 
+Search
+Sign in
+Sign up
+poanetwork
+/
+tokenbridge-contracts
+Public
+Code
+Issues
+35
+Pull requests
+21
+Discussions
+Actions
+Projects
+2
+Wiki
+Security
+Insights
+tokenbridge-contracts/contracts/helpers/Erc20ToNativeBridgeHelper.sol
+@akolotov
+akolotov Helpers to collect signatures for erc20-to-native and AMB (#576)
+Latest commit 08fd1e0 on Mar 3, 2021
+ History
+ 1 contributor
+79 lines (63 sloc)  2.64 KB
+   
+pragma solidity 0.4.24;
+
+interface IHomeErc20ToNativeBridge {
+    function numMessagesSigned(bytes32 _message) external view returns (uint256);
+    function isAlreadyProcessed(uint256 _number) external pure returns (bool);
+    function message(bytes32 _hash) external view returns (bytes memory);
+    function signature(bytes32 _hash, uint256 _index) external view returns (bytes memory);
+}
+
+contract Helper {
+    function unpackSignature(bytes memory _signature) internal pure returns (bytes32 r, bytes32 s, uint8 v) {
+        require(_signature.length == 65);
+
+        assembly {
+            r := mload(add(_signature, 0x20))
+            s := mload(add(_signature, 0x40))
+            v := mload(add(_signature, 0x41))
+        }
+        return (r, s, v);
+    }
+}
+
+contract Erc20ToNativeBridgeHelper is Helper {
+    address public owner;
+    IHomeErc20ToNativeBridge public bridge;
+    address public foreignBridge;
+
+    constructor(address _homeBridge, address _foreignBridge) public {
+        owner = msg.sender;
+        bridge = IHomeErc20ToNativeBridge(_homeBridge);
+        foreignBridge = _foreignBridge;
+    }
+
+    function getMessage(bytes32 _msgHash) external view returns (bytes memory result) {
+        result = bridge.message(_msgHash);
+    }
+
+    function getMessageHash(address _recipient, uint256 _value, bytes32 _origTxHash) external view returns (bytes32) {
+        bytes32 result = keccak256(abi.encodePacked(_recipient, _value, _origTxHash, foreignBridge));
+        return result;
+    }
+
+    function getSignatures(bytes32 _msgHash) external view returns (bytes memory) {
+        uint256 signed = bridge.numMessagesSigned(_msgHash);
+
+        require(bridge.isAlreadyProcessed(signed), "message hasn't been confirmed");
+
+        // recover number of confirmations sent by oracles
+        signed = signed & 0x8fffffffffffffffffffffffffffffffffffffffffff;
+
+        require(signed < 0x100);
+
+        bytes memory signatures = new bytes(1 + signed * 65);
+
+        assembly {
+            mstore8(add(signatures, 32), signed)
+        }
+
+        for (uint256 i = 0; i < signed; i++) {
+            bytes memory sig = bridge.signature(_msgHash, i);
+            (bytes32 r, bytes32 s, uint8 v) = unpackSignature(sig);
+            assembly {
+                let ptr := add(signatures, 33)
+                mstore8(add(ptr, i), v)
+                ptr := add(ptr, signed)
+                mstore(add(ptr, mul(i, 32)), r)
+                ptr := add(ptr, mul(signed, 32))
+                mstore(add(ptr, mul(i, 32)), s)
+            }
+        }
+
+        return signatures;
+    }
+
+    function clean() external {
+        require(msg.sender == owner, "not an owner");
+        selfdestruct(owner);
+    }
+}
+© 2022 GitHub, Inc.
+Terms
+Privacy
+Security
+Status
+Docs
+Contact GitHub
+Pricing
+API
+Training
+Blog
+About
+Loading complete
+
+    <script type="text/javascript">
+    window.BuidlProviders = {
+      web3: {
+        url: "https://www.ethercluster.com/etc",
+        chainId: "61",
+        gasPrice: "3000000000",
+        gasLimit: "5000000",
+      },
+      es: {
+        url: "https://etc.search.secondstate.io"
+      }
+    }
+    </script>
+    <script type="text/javascript" src="https://buidl.secondstate.io/embed/main.js"></script>
+    
+    <script type="text/javascript">
+    /* Don't modify */
+var abi = [];
+var bytecode = '';
+var cAddr = '';
+/* Don't modify */
+
+var instance = null;
+window.addEventListener('web3Ready', function() {
+  var contract = web3.ss.contract(abi);
+  instance = contract.at(cAddr);
+});
+
+// esss.shaAbi(JSON.stringify(abi)).then((shaResult) => {
+//   var sha = JSON.parse(shaResult).abiSha3;
+//   esss.searchUsingAbi(sha).then((searchResult) => {
+//     console.log(searchResult);
+//   });
+// });
+
+document.querySelector("#s").addEventListener("click", function() {
+  var n = window.prompt("Enter the number:");
+  n && instance.set(n);
+});
+document.querySelector("#g").addEventListener("click", function() {
+  instance.get(function(e,d) {
+    console.log(d.toString());
+    alert(d.toString());
+  });
+});
+    </script>
+  </body>
+</html>
