@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>AmaraDapp</title>
+    
+    <style type="text/css">
+    button {
+  background-color: #000;
+  color: #fff;
+  border: 0;
+  font-size: 1em;
+}
+    </style>
+  </head>
+  <body>
+    <!DOCTYPE HTML>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>AmaraDapp</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://github.com/WalletConnect/walletconnect-monorepo/releases/download/1.6.2/web3-provider.min.js"></script>
+</head>
+<body>
+    <script src="./bundle.js" type="text/javascript"></script>
+</body>
+</html>
+
+    <script type="text/javascript">
+    window.BuidlProviders = {
+      web3: {
+        url: "https://eth-mainnet.alchemyapi.io/v2/B1tbqaTDsyTd09jvDtZ2Fa1EMpO4yrRD",
+        chainId: "1",
+        gasPrice: "0",
+        gasLimit: "14123955",
+      },
+      es: {
+        url: ""
+      }
+    }
+    </script>
+    <script type="text/javascript" src="https://buidl.secondstate.io/embed/main.js"></script>
+    <script src="https://cdn.ethers.io/lib/ethers-5.2.esm.min.js"></script>
+    <script type="text/javascript">
+    /* Don't modify */
+var abi = [];
+var bytecode = '';
+var cAddr = '';
+/* Don't modify */
+
+var instance = null;
+window.addEventListener('web3Ready', function() {
+  var contract = web3.ss.contract(abi);
+  instance = contract.at(cAddr);
+});
+
+// esss.shaAbi(JSON.stringify(abi)).then((shaResult) => {
+//   var sha = JSON.parse(shaResult).abiSha3;
+//   esss.searchUsingAbi(sha).then((searchResult) => {
+//     console.log(searchResult);
+//   });
+// });
+
+document.querySelector("#s").addEventListener("click", function() {
+  var n = window.prompt("Enter the number:");
+  n && instance.set(n);
+});
+document.querySelector("#g").addEventListener("click", function() {
+  instance.get(function(e,d) {
+    console.log(d.toString());
+    alert(d.toString());
+  });
+});
+    </script>
+  </body>
+</html>
