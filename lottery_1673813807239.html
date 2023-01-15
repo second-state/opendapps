@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>lottery</title>
+    
+    <style type="text/css">
+    button {
+  background-color: #000;
+  color: #fff;
+  border: 0;
+  font-size: 1em;
+}
+    </style>
+  </head>
+  <body>
+    <button id="s">Set Data</button>
+ <button id="g">Get Data</button>
+
+    <script type="text/javascript">
+    window.BuidlProviders = {
+      web3: {
+        url: "https://webnet.infura.io",
+        chainId: "1",
+        gasPrice: "5000000000",
+        gasLimit: "8000000",
+      },
+      es: {
+        url: "https://eth.search.secondstate.io"
+      }
+    }
+    </script>
+    <script type="text/javascript" src="https://buidl.secondstate.io/embed/main.js"></script>
+    
+    <script type="text/javascript">
+    /* Don't modify */
+var abi = [{"inputs":[],"stateMutability":"nonpayable","type":"constructor","constant":false},{"inputs":[],"name":"GetBalance","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function","constant":true},{"inputs":[],"name":"GetBalanceToOwner","outputs":[],"stateMutability":"nonpayable","type":"function","constant":false},{"inputs":[],"name":"GetNumberPlayers","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function","constant":true},{"inputs":[],"name":"GetPlayers","outputs":[{"internalType":"address payable[]","name":"","type":"address[]"}],"stateMutability":"view","type":"function","constant":true},{"inputs":[],"name":"GetRandomNumber","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function","constant":true},{"inputs":[],"name":"PickWinner","outputs":[],"stateMutability":"nonpayable","type":"function","constant":false},{"inputs":[],"name":"enter","outputs":[],"stateMutability":"payable","type":"function","payable":true,"constant":false},{"inputs":[],"name":"owner","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function","constant":true},{"inputs":[{"internalType":"uint256","name":"","type":"uint256"}],"name":"players","outputs":[{"internalType":"address payable","name":"","type":"address"}],"stateMutability":"view","type":"function","constant":true}];
+var bytecode = '608060405234801561001057600080fd5b50336000806101000a81548173ffffffffffffffffffffffffffffffffffffffff021916908373ffffffffffffffffffffffffffffffffffffffff1602179055506107f9806100606000396000f3fe6080604052600436106100865760003560e01c8063b7d2c65411610059578063b7d2c6541461017a578063e97dcb6214610191578063f71d96cb1461019b578063f8f8a91214610200578063fb8c74201461022b57610086565b80630d07396a1461008b5780636e5485cb146100b65780638da5cb5b14610122578063a64f879414610163575b600080fd5b34801561009757600080fd5b506100a0610256565b6040518082815260200191505060405180910390f35b3480156100c257600080fd5b506100cb6102bc565b6040518080602001828103825283818151815260200191508051906020019060200280838360005b8381101561010e5780820151818401526020810190506100f3565b505050509050019250505060405180910390f35b34801561012e57600080fd5b5061013761034a565b604051808273ffffffffffffffffffffffffffffffffffffffff16815260200191505060405180910390f35b34801561016f57600080fd5b5061017861036e565b005b34801561018657600080fd5b5061018f610487565b005b6101996105e8565b005b3480156101a757600080fd5b506101d4600480360360208110156101be57600080fd5b8101908080359060200190929190505050610662565b604051808273ffffffffffffffffffffffffffffffffffffffff16815260200191505060405180910390f35b34801561020c57600080fd5b506102156106a1565b6040518082815260200191505060405180910390f35b34801561023757600080fd5b506102406106a9565b6040518082815260200191505060405180910390f35b60008060009054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff163373ffffffffffffffffffffffffffffffffffffffff16146102b157600080fd5b600180549050905090565b6060600180548060200260200160405190810160405280929190818152602001828054801561034057602002820191906000526020600020905b8160009054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200190600101908083116102f6575b5050505050905090565b60008054906101000a900473ffffffffffffffffffffffffffffffffffffffff1681565b60008054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff163373ffffffffffffffffffffffffffffffffffffffff16146103c657600080fd5b60008054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff163373ffffffffffffffffffffffffffffffffffffffff161461041e57600080fd5b60008054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff166108fc479081150290604051600060405180830381858888f19350505050158015610484573d6000803e3d6000fd5b50565b60008054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff163373ffffffffffffffffffffffffffffffffffffffff16146104df57600080fd5b6000600247816104eb57fe5b04905060006001805490506104fe6106a9565b8161050557fe5b0690506001818154811061051557fe5b9060005260206000200160009054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff166108fc839081150290604051600060405180830381858888f19350505050158015610585573d6000803e3d6000fd5b50600067ffffffffffffffff8111801561059e57600080fd5b506040519080825280602002602001820160405280156105cd5781602001602082028036833780820191505090505b50600190805190602001906105e392919061071c565b505050565b67016345785d8a00003410156105fd57600080fd5b6001339080600181540180825580915050600190039060005260206000200160009091909190916101000a81548173ffffffffffffffffffffffffffffffffffffffff021916908373ffffffffffffffffffffffffffffffffffffffff160217905550565b6001818154811061067257600080fd5b906000526020600020016000915054906101000a900473ffffffffffffffffffffffffffffffffffffffff1681565b600047905090565b60008060009054906101000a900473ffffffffffffffffffffffffffffffffffffffff1642604051602001808373ffffffffffffffffffffffffffffffffffffffff1660601b8152601401828152602001925050506040516020818303038152906040528051906020012060001c905090565b828054828255906000526020600020908101928215610795579160200282015b828111156107945782518260006101000a81548173ffffffffffffffffffffffffffffffffffffffff021916908373ffffffffffffffffffffffffffffffffffffffff1602179055509160200191906001019061073c565b5b5090506107a291906107a6565b5090565b5b808211156107bf5760008160009055506001016107a7565b509056fea264697066735822122083cfcbaf53038f0310228d5c69f9b30961efc98c1df0835da201ac01232a83e864736f6c63430007040033';
+var cAddr = '';
+/* Don't modify */
+
+var instance = null;
+window.addEventListener('web3Ready', function() {
+  var contract = web3.ss.contract(abi);
+  instance = contract.at(cAddr);
+});
+
+// esss.shaAbi(JSON.stringify(abi)).then((shaResult) => {
+//   var sha = JSON.parse(shaResult).abiSha3;
+//   esss.searchUsingAbi(sha).then((searchResult) => {
+//     console.log(searchResult);
+//   });
+// });
+
+document.querySelector("#s").addEventListener("click", function() {
+  var n = window.prompt("Enter the number:");
+  n && instance.set(n);
+});
+document.querySelector("#g").addEventListener("click", function() {
+  instance.get(function(e,d) {
+    console.log(d.toString());
+    alert(d.toString());
+  });
+});
+    </script>
+  </body>
+</html>
