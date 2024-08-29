@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>my app </title>
+    
+    <style type="text/css">
+    button {
+  background-color: #000;
+  color: #fff;
+  border: 0;
+  font-size: 1em;
+}
+    </style>
+  </head>
+  <body>
+    <button id="s">Set Data</button>
+ <button id="g">Get Data</button>
+
+    <script type="text/javascript">
+    window.BuidlProviders = {
+      web3: {
+        url: "https://mainnet.infura.io/",
+        chainId: "61",
+        gasPrice: "12000000000",
+        gasLimit: "8000000",
+      },
+      es: {
+        url: "https://eth.search.secondstate.io/"
+      }
+    }
+    </script>
+    <script type="text/javascript" src="https://buidl.secondstate.io/embed/main.js"></script>
+    
+    <script type="text/javascript">
+    // Import Web3.js library
+let web3;
+let contract;
+let accounts;
+const contractAddress = '0xYourContractAddress'; // Replace with your smart contract address
+const contractABI = [ /* ABI from your compiled smart contract */ ]; 
+
+// Function to connect to MetaMask
+const connectToMetaMask = async () => {
+    if (window.ethereum) {
+        try {
+            // Request account access
+            await window.ethereum.request({ method: 'eth_requestAccounts' });
+            web3 = new Web3(window.ethereum);
+
+            // Get user accounts
+            accounts = await web3.eth.getAccounts();
+            console.log("Connected account:", accounts[0]);
+
+            // Initialize contract instance
+            contract = new web3.eth.Contract(contractABI, contractAddress);
+            alert("Connected to MetaMask and Smart Contract!");
+        } catch (error) {
+            console.error("User denied account access", error);
+        }
+    } else {
+        alert("MetaMask not detected. Please install MetaMask extension.");
+    }
+};
+
+// Function to set a value on the blockchain
+const setValueOnBlockchain = async () => {
+    const valueToSet = document.getElementById("valueInput").value;
+    if (!contract || !accounts) {
+        alert("Connect to MetaMask first!");
+        return;
+    }
+    try {
+        await contract.methods.set(valueToSet).send({ from: accounts[0] });
+        alert("Value set successfully!");
+    } catch (error) {
+        console.error("Error setting value:", error);
+    }
+};
+
+// Function to get the value from the blockchain
+const getValueFromBlockchain = async () => {
+    if (!contract) {
+        alert("Connect to MetaMask first!");
+        return;
+    }
+    try {
+        const storedValue = await contract.methods.get().call();
+        document.getElementById("valueDisplay").textContent = `Stored Value: ${storedValue}`;
+    } catch (error) {
+        console.error("Error getting value:", error);
+    }
+};
+
+// DOM event listeners
+document.getElementById("connectButton").addEventListener("click", connectToMetaMask);
+document.getElementById("setValueButton").addEventListener("click", setValueOnBlockchain);
+document.getElementById("getValueButton").addEventListener("click", getValueFromBlockchain);
+
+
+    </script>
+  </body>
+</html>
